@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.1 — 2026-07-29
+
+- Document **DeepSeek-family** scope including **GigaChat** lab evidence (`docs/SUPPORTED_MODELS.md`)
+- Publish sanitized GigaChat results: v21 / v32 / v34 under `results/gigachat_*`
+- README / MODEL_CARD / WHAT_WE_CLAIM: not “DeepSeek-only”, not “any MoE”
+
 ## 0.5.0 — 2026-07-29
 
 - GitHub / ML-industry packaging: `MODEL_CARD.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md`, `docs/LAB_SCOPE.md`, CI workflow

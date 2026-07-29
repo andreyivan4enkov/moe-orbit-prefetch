@@ -2,12 +2,13 @@
 
 This repository contains **two different kinds of evidence**. Mixing them is the usual reason Grok/Gemini say “not real tests.”
 
-| Tier | Name | Uses DeepSeek weights? | What it proves | What it does **not** prove |
+| Tier | Name | Uses live MoE weights? | What it proves | What it does **not** prove |
 |---|---|---|---|---|
-| **L** | Live lab | **Yes** | Residency / miss-wait / code quality on real DeepSeek-V2-Lite(-Chat) | That offline synthetic hit equals live gate hit |
+| **L** | Live lab | **Yes** (DeepSeek and/or GigaChat) | Residency / miss-wait / lean code on real open MoE | That offline synthetic hit equals live gate hit |
 | **S** | Synthetic analysis | **No** | Field dynamics of `OrbitPredictor` on a learnable stream | Anything about the trained MoE router |
 
-**Rule:** Tier **S** numbers must never be cited as Tier **L** proof.
+**Rule:** Tier **S** numbers must never be cited as Tier **L** proof.  
+**Families:** [SUPPORTED_MODELS.md](SUPPORTED_MODELS.md).
 
 ---
 
@@ -21,6 +22,9 @@ This repository contains **two different kinds of evidence**. Mixing them is the
 | [results/v13_full_report.md](../results/v13_full_report.md) | same family | Longer v13 report |
 | [results/v36_humaneval_prefetch_edge.md](../results/v36_humaneval_prefetch_edge.md) | DeepSeek-V2-Lite-Chat | pass@1 **tie** with classic; miss-wait **ours better** (wins>losses); late learning↑ **False** |
 | [results/v36_humaneval_orbit_results.json](../results/v36_humaneval_orbit_results.json) | same | Machine-readable numbers from that run |
+| [results/gigachat_v21_orbit_apply.md](../results/gigachat_v21_orbit_apply.md) | GigaChat3-10B (+ Ultra index) | Orbit store smoke on DeepSeek-style MoE |
+| [results/gigachat_v32_lean.md](../results/gigachat_v32_lean.md) | GigaChat-20B | miss-wait / decode edge vs classic |
+| [results/gigachat_v34_humaneval.md](../results/gigachat_v34_humaneval.md) | GigaChat-20B | lean code: pass@1 tie; miss-wait ours better |
 
 ### How to re-run Tier L yourself
 

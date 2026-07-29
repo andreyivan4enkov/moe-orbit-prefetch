@@ -15,7 +15,7 @@ Legend: **FIXED** in this tree · **PARTIAL** · **OPEN** (accepted) · **OVERST
 | 1.2 | `s_env==0` hot forever | **OVERSTATED** — unused experts are not in `hot`; `mass < thr` already drops zeros | **FIXED** explicit cold-first + `drop_expert` API |
 | 1.3 | Wrong residual in `encode_moe_h` | **OVERSTATED** for current code — intermediate MoE layers **are** executed before target | Keep regression test; mark closed unless repro |
 | 1.4 | Silent prefetch `except: pass` | **FIXED** — counters + last error + optional fail-fast | done in v0.5 |
-| 1.5 | DeepSeek hardcoding | **BY_DESIGN** for Object A v0.x | OPEN as v0.6+ model abstraction |
+| 1.5 | DeepSeek hardcoding | **BY_DESIGN** for *packaged* runtime; **family** includes GigaChat (lab) — not all MoE | see SUPPORTED_MODELS; more adapters OPEN |
 
 ## 2. Concurrency / reliability
 

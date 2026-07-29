@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: If you use this software, please cite it as below.
 title: "moe-orbit-prefetch: Dynamic MoE expert residency via orbit on embedding h"
-version: 0.5.0
+version: 0.5.1
 date-released: "2026-07-29"
 authors:
   - family-names: Ivanchenkov
@@ -11,14 +11,15 @@ license: Apache-2.0
 repository-code: "https://github.com/andreyivan4enkov/moe-orbit-prefetch"
 url: "https://github.com/andreyivan4enkov/moe-orbit-prefetch"
 abstract: >
-  Open-source Object A: MoE expert orbit prefetch from embedding/residual signals,
-  sparse DeepSeek-V2-Lite runtime, math docs, and lean laptop-lab evidence.
-  Apache-2.0; attribution requested for substantial product use (ATTRIBUTION.md).
-  Model weights are not redistributed. Full multi-GPU / 100-task suites are out of
-  author laptop scope (see docs/LAB_SCOPE.md).
+  Open-source Object A: MoE expert orbit prefetch from embedding/residual signals
+  for DeepSeek-style open MoE (DeepSeek-V2-Lite and GigaChat lab paths), sparse
+  runtime, math docs, and lean laptop-lab evidence. Apache-2.0; attribution for
+  substantial product use (ATTRIBUTION.md). Weights not redistributed. Not a
+  drop-in for every MoE without an adapter (see docs/SUPPORTED_MODELS.md).
 keywords:
   - mixture-of-experts
   - expert-prefetch
   - dynamic-inference
   - deepseek
+  - gigachat
   - sparse-moe

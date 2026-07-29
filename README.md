@@ -7,16 +7,18 @@
 [![Status](https://img.shields.io/badge/status-research%20prototype-orange.svg)](MODEL_CARD.md)
 
 **Object A** — dynamic MoE **expert prefetch / residency** from embedding/residual `h`  
-(sparse DeepSeek-V2-Lite path + math + lean lab evidence).
+for **open DeepSeek-style MoE** (DeepSeek-V2-Lite **and** GigaChat lab paths).
 
 > **Status:** research prototype (alpha). Not a production inference server.  
-> **Weights:** not redistributed (Hugging Face / DeepSeek terms).  
-> **Lab compute:** author MacBook-class laptop — see [docs/LAB_SCOPE.md](docs/LAB_SCOPE.md).
+> **Weights:** not redistributed (Hugging Face / model vendor terms).  
+> **Lab compute:** author MacBook-class laptop — see [docs/LAB_SCOPE.md](docs/LAB_SCOPE.md).  
+> **Which models:** [docs/SUPPORTED_MODELS.md](docs/SUPPORTED_MODELS.md) (not “any LLM”).
 
 | Start here | Link |
 |---|---|
 | What we claim | [WHAT_WE_CLAIM.md](WHAT_WE_CLAIM.md) |
 | Model / method card | [MODEL_CARD.md](MODEL_CARD.md) |
+| Supported families | [docs/SUPPORTED_MODELS.md](docs/SUPPORTED_MODELS.md) |
 | Live vs synthetic evidence | [docs/EVIDENCE_TIERS.md](docs/EVIDENCE_TIERS.md) |
 | Lab hardware limits | [docs/LAB_SCOPE.md](docs/LAB_SCOPE.md) |
 | Auditor issue triage | [docs/AUDITOR_ISSUES.md](docs/AUDITOR_ISSUES.md) |
@@ -26,12 +28,13 @@
 
 | Question | Answer |
 |---|---|
-| Real DeepSeek tests? | **Yes** — Tier L: `results/v13_*`, `results/v36_*` |
+| Real model tests? | **Yes** — DeepSeek-V2-Lite **and** GigaChat (10B/20B) Tier L |
+| Only DeepSeek forever? | **No** — law fits DeepSeek-**family** open MoE; GigaChat verified in lab |
+| Any MoE (Mixtral, …)? | **Not without a new adapter** |
 | 100-task GPU HumanEval? | **Not claimed** — out of author laptop scope |
 | Synthetic plots? | Tier **S** only — not live-gate proof |
-| v36 code quality | pass@1 **tie** with classic |
-| v36 prefetch | miss-wait **ours better** (wins>losses) |
-| Late orbit learning↑ | **False** on that lean run |
+| Lean code (DeepSeek v36 / GigaChat v34) | pass@1 **tie** with classic |
+| Prefetch | miss-wait **ours better** (wins>losses) on those leans |
 
 ## Install
 
@@ -53,7 +56,10 @@ python examples/04_chat_ask.py "Hello" --max-new 32
 python examples/bench_humaneval_lean/bench_humaneval_lean.py
 ```
 
-Published snapshots: [results/v36_humaneval_prefetch_edge.md](results/v36_humaneval_prefetch_edge.md).
+Published snapshots:
+
+- DeepSeek: [results/v36_humaneval_prefetch_edge.md](results/v36_humaneval_prefetch_edge.md)
+- GigaChat: [results/gigachat_v34_humaneval.md](results/gigachat_v34_humaneval.md), [results/gigachat_v32_lean.md](results/gigachat_v32_lean.md), [results/gigachat_v21_orbit_apply.md](results/gigachat_v21_orbit_apply.md)
 
 ## Tier S — offline analysis (no weights)
 
