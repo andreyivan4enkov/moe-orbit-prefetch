@@ -121,6 +121,7 @@ S \leftarrow S \cdot \operatorname{clip}(R,\ \varepsilon,\ 1)
 \]
 
 Also store induction memory \(L(\texttt{tok\_id})\leftarrow T\) and append \((\hat h, T)\) to the window.
+If history length exceeds stand size \(\texttt{window}\), keep exactly the last \(\texttt{window}\) pairs (no magic slack).
 
 ---
 

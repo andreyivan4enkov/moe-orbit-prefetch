@@ -26,6 +26,7 @@ def emerges_greater(
     Ряд a эмерджентно выше ряда b по локальным голосам:
       wins = #{i: a_i > b_i}, losses = #{i: a_i < b_i}
       PASS iff wins > losses
+    NaN/Inf pairs are skipped (not counted as wins or losses).
     """
     aa = np.asarray(a, dtype=np.float64).ravel()
     bb = np.asarray(b, dtype=np.float64).ravel()
@@ -34,17 +35,20 @@ def emerges_greater(
     if n <= 0:
         return False, {"gap": 0.0, "mad": eps, "n": 0, "wins": 0, "losses": 0, "win_frac": 0.0}
     d = aa[:n] - bb[:n]
+    finite = np.isfinite(d)
+    d = d[finite]
     wins = int(np.sum(d > 0))
     losses = int(np.sum(d < 0))
-    gap = float(np.mean(d))
-    mad = float(np.mean(np.abs(d - gap))) + eps
+    gap = float(np.mean(d)) if d.size else 0.0
+    mad = (float(np.mean(np.abs(d - gap))) + eps) if d.size else eps
     return bool(wins > losses), {
         "gap": gap,
         "mad": mad,
-        "n": n,
+        "n": int(d.size),
         "wins": wins,
         "losses": losses,
         "win_frac": wins / max(wins + losses, 1),
+        "skipped_nonfinite": int(n - int(d.size)),
     }
 
 

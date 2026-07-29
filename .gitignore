@@ -1,36 +1,13 @@
-# Byte-compiled / cache
-__pycache__/
-*.py[cod]
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-
-# Virtualenvs
 .venv/
 venv/
-env/
-
-# Packaging
-build/
-dist/
+__pycache__/
 *.egg-info/
-
-# IDE / OS
+.pytest_cache/
+exports/
+*.pyc
 .DS_Store
-.idea/
-.vscode/
-
-# Model weights / huge artifacts (never commit)
+dist/
+build/
+.mypy_cache/
+.ruff_cache/
 *.safetensors
-*.bin
-*.gguf
-*.pt
-*.pth
-wandb/
-runs/
-logs/
-
-# Secrets
-.env
-.env.*
-*.pem

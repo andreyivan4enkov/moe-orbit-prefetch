@@ -184,6 +184,9 @@ class SparseDeepseekRuntime:
     _prefetch_paused: bool = False
     pack_dev_cap: int = 512  # ≥~2 токена × слои × top_k, иначе LRU → 0 hits
     n_modeled_prefetch: int = 0
+    n_prefetch_failures: int = 0
+    last_prefetch_error: str = ""
+    fail_fast_prefetch: bool = False  # debug: re-raise worker errors
     n_modeled_hit: int = 0  # live gate ∩ modeled перед загрузкой
     n_gate_pack_hit: int = 0  # live expert уже в pack_dev
     n_gate_pack_miss: int = 0  # пришлось грузить sync на gate
@@ -209,11 +212,25 @@ class SparseDeepseekRuntime:
                     return
                 L, eid, epoch = item
                 try:
-                    if (not self._prefetch_paused) and epoch == self._prefetch_epoch:
-                        self._expert_pack_dev(int(L), int(eid))
-                        self.n_modeled_prefetch += 1
-                except Exception:
-                    pass
+                    if self._cancelled():
+                        continue
+                    if self._prefetch_paused or epoch != self._prefetch_epoch:
+                        continue
+                    self._expert_pack_dev(int(L), int(eid))
+                    self.n_modeled_prefetch += 1
+                except Exception as exc:
+                    self.n_prefetch_failures += 1
+                    self.last_prefetch_error = f"{type(exc).__name__}: {exc}"
+                    self._emit(
+                        {
+                            "phase": "prefetch_error",
+                            "layer": int(L),
+                            "expert": int(eid),
+                            "error": self.last_prefetch_error,
+                        }
+                    )
+                    if self.fail_fast_prefetch:
+                        raise
                 finally:
                     try:
                         self._prefetch_q.task_done()
@@ -245,6 +262,10 @@ class SparseDeepseekRuntime:
     def request_cancel(self) -> None:
         if self.cancel_flag is not None:
             self.cancel_flag.set()
+        # stop accepting / executing stale prefetch work
+        self._prefetch_paused = True
+        self._prefetch_epoch += 1
+        self._drain_prefetch_q()
 
     def _cancelled(self) -> bool:
         return bool(self.cancel_flag is not None and self.cancel_flag.is_set())
@@ -340,6 +361,8 @@ class SparseDeepseekRuntime:
         st["prefetch_horizon"] = self.prefetch_horizon
         st["token_horizon"] = self.token_horizon
         st["n_modeled_prefetch"] = self.n_modeled_prefetch
+        st["n_prefetch_failures"] = self.n_prefetch_failures
+        st["last_prefetch_error"] = self.last_prefetch_error
         st["n_modeled_hit"] = self.n_modeled_hit
         st["n_gate_pack_hit"] = self.n_gate_pack_hit
         st["n_gate_pack_miss"] = self.n_gate_pack_miss
@@ -349,19 +372,22 @@ class SparseDeepseekRuntime:
 
     def clear_expert_residency(self) -> None:
         """Сброс hot/pack для честного cold-сравнения (предикторы не трогаем)."""
+        self._prefetch_paused = True
         self._prefetch_epoch += 1
         self._drain_prefetch_q()
         if self.experts is not None:
-            with self.experts._lock:
-                self.experts.hot.clear()
+            self.experts.drop_all_hot()
         with self._prefetch_lock:
             self._pack_dev.clear()
         self.n_gate_pack_hit = 0
         self.n_gate_pack_miss = 0
         self.gate_miss_seconds = 0.0
         self.n_modeled_prefetch = 0
+        self.n_prefetch_failures = 0
+        self.last_prefetch_error = ""
         self.n_modeled_hit = 0
         self.captured_moe_h = {}
+        self._prefetch_paused = False
 
     def install_predictors(self, factory) -> None:
         """

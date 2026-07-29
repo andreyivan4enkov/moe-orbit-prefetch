@@ -34,3 +34,7 @@ This stream is **synthetic and learnable** by design (so the field dynamics are 
 It is **not** a substitute for live DeepSeek-V2-Lite gate-hit numbers (see `results/v36_*` for hardware-bound lab).
 
 Open `data/orbit_trajectory_200.json` (~200KB) for per-step `true` / `orbit` / hits / `S_env` stats.
+
+Sensitivity of resonance/structure (Tier S diagnostic):  
+`python analysis/sensitivity_resonance_decay.py` → `figures/sensitivity_resonance.json`.  
+Official map for auditors: [docs/EVIDENCE_TIERS.md](../docs/EVIDENCE_TIERS.md), [docs/RISKS.md](../docs/RISKS.md).

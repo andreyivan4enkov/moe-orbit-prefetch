@@ -3,7 +3,8 @@
 **Date:** 2026-07-26  
 **Verdict:** `PASS_CODE_TIE_PREFETCH_EDGE`  
 **Model:** DeepSeek-V2-Lite-Chat, sparse runtime + OrbitPredictor prefetch  
-**Source lab:** theory_megaattractor / `sparse-stigmergy/deepseek_humaneval_orbit_v36_lean`
+**Source lab:** theory_megaattractor / `sparse-stigmergy/deepseek_humaneval_orbit_v36_lean`  
+**Hardware:** author MacBook-class CPU lab — see [docs/LAB_SCOPE.md](../docs/LAB_SCOPE.md). Not a 100-task GPU suite.
 
 ## Summary (plain)
 
@@ -27,6 +28,14 @@
 
 Prefetch helped **waiting for experts**, not magic code accuracy. Learning curve of the predictor did **not** improve toward the end in this lean run.
 
-## Not in this public repo
+## How to re-run (in this public repo)
 
-Full generate runtime / HumanEval harness (large, machine-specific). Results are published as **evidence of what was measured**, not as a one-click reproduce of the multi-hour bench.
+Harness script: [`examples/bench_humaneval_lean/bench_humaneval_lean.py`](../examples/bench_humaneval_lean/bench_humaneval_lean.py)  
+Runtime: `src/moe_orbit_prefetch/sparse_moe_runtime.py` (+ HF DeepSeek-V2-Lite-Chat weights, not shipped).
+
+```bash
+pip install -e ".[runtime]"
+python examples/bench_humaneval_lean/bench_humaneval_lean.py
+```
+
+Numbers above are a **historical lab snapshot** (Mac/CPU-bound). Wall-clock and absolute miss-seconds will differ by machine; re-check qualitative gates (code tie / miss-wait wins>losses / learning↑) rather than copying seconds.

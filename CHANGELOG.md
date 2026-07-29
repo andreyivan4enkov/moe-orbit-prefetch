@@ -1,11 +1,30 @@
 # Changelog
 
+## 0.5.0 — 2026-07-29
+
+- GitHub / ML-industry packaging: `MODEL_CARD.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md`, `docs/LAB_SCOPE.md`, CI workflow
+- README: badges, honest quick facts, laptop-lab limits (no fake 100-task claim)
+- **Auditor triage:** `docs/AUDITOR_ISSUES.md`
+- Expert store: load coalesce, `drop_expert`, cold-first evict, CUDA direct refused by default
+- Prefetch worker: error counters + optional fail-fast; cancel drains epoch/queue
+- `emerges_greater` skips NaN/Inf; `tests/test_store_and_metrics.py`
+- Evidence map / risks / sensitivity (from 0.4.1 line)
+
+## 0.4.1 — 2026-07-29
+
+- **Evidence map:** `docs/EVIDENCE_TIERS.md` (Tier L live vs Tier S synthetic) — fixes auditor confusion
+- **Risks status:** `docs/RISKS.md` (window+8 removed; sensitivity script; R3 honesty)
+- README leads with **live** results + how to re-run on real DeepSeek
+- v36 report no longer claims harness is “not in this repo”
+- `OrbitPredictor` prunes history to exact `window`
+- `analysis/sensitivity_resonance_decay.py` Tier-S diagnostic
+
 ## 0.4.0 — 2026-07-29
 
 - **Analysis pack** for reviewers: 200-step trajectory JSON, PNG figures, gates vs classical baselines
 - `docs/ARCHITECTURE.md` with system mermaid
 - `analysis/REPORT.md` + regenerate scripts
-- README leads with analyzable artifacts (no weights required)
+- README previously led with analyzable artifacts (no weights required)
 
 ## 0.3.0 — 2026-07-29
 

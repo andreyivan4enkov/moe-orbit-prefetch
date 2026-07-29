@@ -47,8 +47,11 @@ class DynamicExpertStore:
     n_loads: int = 0
     n_hits: int = 0
     n_misses: int = 0
+    n_coalesced_waits: int = 0  # another thread already loading same expert
     allow_hub_download: bool = False
+    allow_cuda_direct: bool = False  # refuse device=cuda unless True (OOM guard)
     _lock: Any = field(default_factory=threading.Lock, repr=False)
+    _loading: dict[tuple[int, int], threading.Event] = field(default_factory=dict, repr=False)
 
     @classmethod
     def from_index_file(
@@ -132,50 +135,110 @@ class DynamicExpertStore:
         *,
         device: str = "cpu",
     ) -> dict[str, torch.Tensor]:
+        """
+        Load one expert into `hot` (or return cached).
+
+        Concurrent callers for the same (layer, eid) coalesce: one thread loads,
+        others wait on an Event, then take the hot pack (no duplicate insert).
+        """
+        if str(device).startswith("cuda") and not self.allow_cuda_direct:
+            raise RuntimeError(
+                "refusing safetensors open on cuda without allow_cuda_direct=True "
+                "(set True only with a VRAM budget / memory guard). Prefer device='cpu'."
+            )
+        key = (layer, expert_id)
+        wait_ev: threading.Event | None = None
+        we_load = False
+        with self._lock:
+            if key in self.hot:
+                self.n_hits += 1
+                self.s_env[key] = self.s_env.get(key, 0.0) + 1.0
+                return self.hot[key]
+            if key in self._loading:
+                wait_ev = self._loading[key]
+                self.n_coalesced_waits += 1
+            else:
+                wait_ev = threading.Event()
+                self._loading[key] = wait_ev
+                we_load = True
+                self.n_misses += 1
+
+        if not we_load:
+            assert wait_ev is not None
+            wait_ev.wait(timeout=600.0)
+            with self._lock:
+                if key in self.hot:
+                    self.n_hits += 1
+                    self.s_env[key] = self.s_env.get(key, 0.0) + 1.0
+                    return self.hot[key]
+            raise RuntimeError(f"coalesced wait failed for expert {key}")
+
+        try:
+            names = self.expert_tensor_names(layer, expert_id)
+            if not names:
+                raise KeyError(f"no tensors for layer={layer} expert={expert_id}")
+
+            loaded: dict[str, torch.Tensor] = {}
+            nbytes = 0
+            by_shard: dict[str, list[str]] = {}
+            for name in names:
+                by_shard.setdefault(self.weight_map[name], []).append(name)
+            for shard_name, tnames in by_shard.items():
+                path = self.resolve_shard_path(shard_name)
+                if path is None:
+                    raise FileNotFoundError(
+                        f"shard {shard_name} not local; set allow_hub_download=True to fetch"
+                    )
+                with safe_open(str(path), framework="pt", device=device) as f:
+                    available = set(f.keys())
+                    for name in tnames:
+                        if name not in available:
+                            raise KeyError(f"missing tensor {name} in {shard_name}")
+                        t = f.get_tensor(name)
+                        short = name.split(f"experts.{expert_id}.")[-1]
+                        loaded[short] = t
+                        nbytes += int(t.numel() * t.element_size())
+
+            with self._lock:
+                if key in self.hot:
+                    self.n_hits += 1
+                    self.s_env[key] = self.s_env.get(key, 0.0) + 1.0
+                    return self.hot[key]
+                self.hot[key] = loaded
+                self.bytes_loaded += nbytes
+                self.n_loads += 1
+                self.s_env[key] = self.s_env.get(key, 0.0) + 1.0
+                return loaded
+        finally:
+            with self._lock:
+                ev = self._loading.pop(key, None)
+                if ev is not None:
+                    ev.set()
+
+    def drop_expert(self, layer: int, expert_id: int) -> bool:
+        """Forced drop of one hot expert. Returns True if it was resident."""
         key = (layer, expert_id)
         with self._lock:
-            if key in self.hot:
-                self.n_hits += 1
-                self.s_env[key] = self.s_env.get(key, 0.0) + 1.0
-                return self.hot[key]
+            pack = self.hot.pop(key, None)
+            if pack is None:
+                return False
+            seen: set[int] = set()
+            for t in pack.values():
+                if id(t) in seen:
+                    continue
+                seen.add(id(t))
+                self.bytes_evicted += int(t.numel() * t.element_size())
+            return True
 
-        self.n_misses += 1
-        names = self.expert_tensor_names(layer, expert_id)
-        if not names:
-            raise KeyError(f"no tensors for layer={layer} expert={expert_id}")
-
-        loaded: dict[str, torch.Tensor] = {}
-        nbytes = 0
-        # каждый тензор может быть в своём шарде
-        by_shard: dict[str, list[str]] = {}
-        for name in names:
-            by_shard.setdefault(self.weight_map[name], []).append(name)
-        for shard_name, tnames in by_shard.items():
-            path = self.resolve_shard_path(shard_name)
-            if path is None:
-                raise FileNotFoundError(
-                    f"shard {shard_name} not local; set allow_hub_download=True to fetch"
-                )
-            with safe_open(str(path), framework="pt", device=device) as f:
-                available = set(f.keys())
-                for name in tnames:
-                    if name not in available:
-                        raise KeyError(f"missing tensor {name} in {shard_name}")
-                    t = f.get_tensor(name)
-                    short = name.split(f"experts.{expert_id}.")[-1]
-                    loaded[short] = t
-                    nbytes += int(t.numel() * t.element_size())
-
+    def drop_all_hot(self) -> int:
+        """Drop every resident expert. Returns count dropped."""
         with self._lock:
-            if key in self.hot:
-                self.n_hits += 1
-                self.s_env[key] = self.s_env.get(key, 0.0) + 1.0
-                return self.hot[key]
-            self.hot[key] = loaded
-            self.bytes_loaded += nbytes
-            self.n_loads += 1
-            self.s_env[key] = self.s_env.get(key, 0.0) + 1.0
-            return loaded
+            keys = list(self.hot.keys())
+        n = 0
+        for layer, eid in keys:
+            if self.drop_expert(layer, eid):
+                n += 1
+        return n
 
     def resident_bytes(self) -> int:
         total = 0
@@ -189,40 +252,34 @@ class DynamicExpertStore:
         return total
 
     def evict_below_mean(self) -> list[tuple[int, int]]:
-        """Sleep: выгрузить экспертов с S_env < mean(positive). Эмерджентный порог."""
-        if not self.s_env:
+        """
+        Sleep: unload experts with S_env < mean(positive masses).
+        Also always treat mass<=0 as cold (evict first) if present in hot.
+        """
+        if not self.s_env and not self.hot:
             return []
         pos = [v for v in self.s_env.values() if v > 0]
-        if not pos:
-            return []
-        thr = sum(pos) / len(pos)
+        thr = (sum(pos) / len(pos)) if pos else 0.0
         dropped: list[tuple[int, int]] = []
+        # cold-first: zero / missing mass in hot
+        for key in list(self.hot.keys()):
+            mass = self.s_env.get(key, 0.0)
+            if mass <= 0.0:
+                if self.drop_expert(key[0], key[1]):
+                    dropped.append(key)
         for key, mass in list(self.s_env.items()):
             if mass < thr and key in self.hot:
-                pack = self.hot.pop(key)
-                seen: set[int] = set()
-                for t in pack.values():
-                    if id(t) in seen:
-                        continue
-                    seen.add(id(t))
-                    self.bytes_evicted += int(t.numel() * t.element_size())
-                dropped.append(key)
+                if self.drop_expert(key[0], key[1]):
+                    dropped.append(key)
         return dropped
 
     def trim_to_bytes(self, max_bytes: int) -> list[tuple[int, int]]:
         """Жёсткий sleep: выгружать самых холодных, пока resident > max_bytes."""
         dropped: list[tuple[int, int]] = []
         while self.resident_bytes() > max_bytes and self.hot:
-            # самый низкий S_env среди hot
             key = min(self.hot.keys(), key=lambda k: self.s_env.get(k, 0.0))
-            pack = self.hot.pop(key)
-            seen: set[int] = set()
-            for t in pack.values():
-                if id(t) in seen:
-                    continue
-                seen.add(id(t))
-                self.bytes_evicted += int(t.numel() * t.element_size())
-            dropped.append(key)
+            if self.drop_expert(key[0], key[1]):
+                dropped.append(key)
         return dropped
 
     def n_hot(self) -> int:
@@ -237,5 +294,7 @@ class DynamicExpertStore:
             "n_loads": self.n_loads,
             "n_hits": self.n_hits,
             "n_misses": self.n_misses,
+            "n_coalesced_waits": self.n_coalesced_waits,
             "s_env_keys": len(self.s_env),
+            "allow_cuda_direct": self.allow_cuda_direct,
         }

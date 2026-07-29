@@ -1,0 +1,55 @@
+{
+  "tier": "S",
+  "note": "Sensitivity of OrbitPredictor on synthetic stream under h-structure stretch. Not a live DeepSeek gate study. Not a magic PASS threshold. Expect: weaker structure \u2192 usually lower hit (R3 risk visible here).",
+  "rows": [
+    {
+      "stretch": 0.25,
+      "mean_hit": 0.20416666666666664,
+      "early_hit": 0.19166666666666665,
+      "late_hit": 0.18333333333333332,
+      "mean_nnz": 59.68
+    },
+    {
+      "stretch": 0.5,
+      "mean_hit": 0.2333333333333333,
+      "early_hit": 0.18749999999999997,
+      "late_hit": 0.2375,
+      "mean_nnz": 59.79
+    },
+    {
+      "stretch": 1.0,
+      "mean_hit": 0.46083333333333326,
+      "early_hit": 0.4916666666666667,
+      "late_hit": 0.4958333333333333,
+      "mean_nnz": 52.42
+    },
+    {
+      "stretch": 1.5,
+      "mean_hit": 0.5866666666666667,
+      "early_hit": 0.6625,
+      "late_hit": 0.5083333333333333,
+      "mean_nnz": 47.59
+    },
+    {
+      "stretch": 2.0,
+      "mean_hit": 0.6833333333333335,
+      "early_hit": 0.6708333333333334,
+      "late_hit": 0.6625,
+      "mean_nnz": 34.915
+    }
+  ],
+  "gates_diagnostic": {
+    "stretch_2.0_vs_0.25": {
+      "pass": true,
+      "wins": 194,
+      "losses": 4,
+      "gap": 0.47916666666666674
+    },
+    "stretch_1.0_vs_0.5": {
+      "pass": true,
+      "wins": 151,
+      "losses": 21,
+      "gap": 0.2275
+    }
+  }
+}

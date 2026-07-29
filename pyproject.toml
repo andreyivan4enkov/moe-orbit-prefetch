@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "moe-orbit-prefetch"
-version = "0.4.0"
-description = "Object A: MoE orbit prefetch — full source, math, analysis trajectories/plots (Apache-2.0)"
+version = "0.5.0"
+description = "Object A: MoE orbit prefetch — research prototype (Apache-2.0). Laptop-lab evidence; weights not shipped."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "Apache-2.0" }

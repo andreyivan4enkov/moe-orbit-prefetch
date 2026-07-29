@@ -1,64 +1,112 @@
 # moe-orbit-prefetch
 
-**Object A — open MoE orbit prefetch** (math + runtime + **analysis artifacts**).
-
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![CI](https://github.com/andreyivan4enkov/moe-orbit-prefetch/actions/workflows/ci.yml/badge.svg)](https://github.com/andreyivan4enkov/moe-orbit-prefetch/actions/workflows/ci.yml)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![Release](https://img.shields.io/github/v/release/andreyivan4enkov/moe-orbit-prefetch)](https://github.com/andreyivan4enkov/moe-orbit-prefetch/releases)
+[![Status](https://img.shields.io/badge/status-research%20prototype-orange.svg)](MODEL_CARD.md)
 
-If you only skimmed earlier tags: **start with analysis** — there are trajectories, plots, and gates you can open without downloading DeepSeek weights.
+**Object A** — dynamic MoE **expert prefetch / residency** from embedding/residual `h`  
+(sparse DeepSeek-V2-Lite path + math + lean lab evidence).
 
-## Analyze first (no weights)
+> **Status:** research prototype (alpha). Not a production inference server.  
+> **Weights:** not redistributed (Hugging Face / DeepSeek terms).  
+> **Lab compute:** author MacBook-class laptop — see [docs/LAB_SCOPE.md](docs/LAB_SCOPE.md).
+
+| Start here | Link |
+|---|---|
+| What we claim | [WHAT_WE_CLAIM.md](WHAT_WE_CLAIM.md) |
+| Model / method card | [MODEL_CARD.md](MODEL_CARD.md) |
+| Live vs synthetic evidence | [docs/EVIDENCE_TIERS.md](docs/EVIDENCE_TIERS.md) |
+| Lab hardware limits | [docs/LAB_SCOPE.md](docs/LAB_SCOPE.md) |
+| Auditor issue triage | [docs/AUDITOR_ISSUES.md](docs/AUDITOR_ISSUES.md) |
+| Русская витрина | [README.ru.md](README.ru.md) |
+
+## Quick facts (honest)
+
+| Question | Answer |
+|---|---|
+| Real DeepSeek tests? | **Yes** — Tier L: `results/v13_*`, `results/v36_*` |
+| 100-task GPU HumanEval? | **Not claimed** — out of author laptop scope |
+| Synthetic plots? | Tier **S** only — not live-gate proof |
+| v36 code quality | pass@1 **tie** with classic |
+| v36 prefetch | miss-wait **ours better** (wins>losses) |
+| Late orbit learning↑ | **False** on that lean run |
+
+## Install
 
 ```bash
 git clone https://github.com/andreyivan4enkov/moe-orbit-prefetch.git
-cd moe-orbit-prefetch && pip install -e ".[analysis]"
-python analysis/generate_orbit_trajectory.py
-python analysis/plot_orbit_analysis.py
+cd moe-orbit-prefetch
+pip install -e ".[runtime]"   # needs torch / HF for live path
+# or
+pip install -e ".[analysis]"  # no weights; plots + unit-level scripts
 ```
 
-| Artifact | What it is |
-|---|---|
-| [analysis/REPORT.md](analysis/REPORT.md) | How to read the offline experiment |
-| [analysis/data/orbit_trajectory_200.json](analysis/data/orbit_trajectory_200.json) | **~215KB** per-step JSON (200 steps) |
-| [analysis/figures/hit_curves_vs_baselines.png](analysis/figures/hit_curves_vs_baselines.png) | Orbit vs prev/freq/cyclic |
-| [analysis/figures/s_env_evolution.png](analysis/figures/s_env_evolution.png) | Field \(S_{\mathrm{env}}\) over time |
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Mermaid system map |
-| [docs/MATH.md](docs/MATH.md) | Full equations |
-| [docs/SOURCE_MANIFEST.md](docs/SOURCE_MANIFEST.md) | Every editable source file |
+## Tier L — real model (needs HF cache)
 
-On a learnable synthetic stream (not live DeepSeek gate): orbit mean hit **≈0.30** vs prev **≈0.17** / freq **≈0.14** / cyclic **≈0.08**; emergent gates vs those baselines **PASS** (wins>losses). Re-run the scripts to regenerate.
+```bash
+python examples/02_smoke_expert_slice.py
+python examples/03_smoke_dynamic_weights_v13.py
+python examples/04_chat_ask.py "Hello" --max-new 32
+# lean bench (hours on CPU laptop):
+python examples/bench_humaneval_lean/bench_humaneval_lean.py
+```
 
-## Full source (edit / fork)
+Published snapshots: [results/v36_humaneval_prefetch_edge.md](results/v36_humaneval_prefetch_edge.md).
+
+## Tier S — offline analysis (no weights)
+
+```bash
+python analysis/generate_orbit_trajectory.py
+python analysis/plot_orbit_analysis.py
+python analysis/sensitivity_resonance_decay.py
+```
+
+## Source layout
 
 ```text
 src/moe_orbit_prefetch/
-  orbit_predictor.py       # predictor math
-  emergent_metrics.py      # local thresholds + wins>losses
-  dynamic_expert_store.py  # safetensors expert slices + sleep
-  sparse_moe_runtime.py    # ~900 lines sparse DeepSeek generate + prefetch
-  deepseek_chat_engine.py  # ask / chat_generate
+  orbit_predictor.py
+  emergent_metrics.py
+  dynamic_expert_store.py
+  sparse_moe_runtime.py
+  deepseek_chat_engine.py
   process_gate.py
+docs/MATH.md              # equations
+MODEL_CARD.md             # ML-style method card
 ```
 
-License: **Apache-2.0** (free). Substantial products: credit upstream — [ATTRIBUTION.md](ATTRIBUTION.md).  
-Weights stay on Hugging Face (not redistributed).
+## License & citation
 
-## Runtime examples (needs HF cache)
+- **Apache-2.0** — [LICENSE](LICENSE), [NOTICE](NOTICE)
+- Substantial products: [ATTRIBUTION.md](ATTRIBUTION.md)
+- Cite: [CITATION.cff](CITATION.cff)
+
+```bibtex
+@software{moe_orbit_prefetch,
+  author = {Ivanchenkov, Andrey},
+  title = {moe-orbit-prefetch},
+  year = {2026},
+  url = {https://github.com/andreyivan4enkov/moe-orbit-prefetch},
+  license = {Apache-2.0},
+  version = {0.5.0}
+}
+```
+
+## Contributing / security / conduct
+
+- [CONTRIBUTING.md](CONTRIBUTING.md)
+- [SECURITY.md](SECURITY.md)
+- [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+- [CHANGELOG.md](CHANGELOG.md)
+
+## LLM auditors
+
+Do **not** paste a ZIP as text (`PK` / Deflate). Prefer raw file URLs or:
 
 ```bash
-pip install -e ".[runtime]"
-python examples/02_smoke_expert_slice.py
-python examples/04_chat_ask.py "Hello" --max-new 32
+python tools/export_plaintext_for_audit.py
 ```
 
-Lab (hardware-bound): [results/v36_humaneval_prefetch_edge.md](results/v36_humaneval_prefetch_edge.md).
-
-## Docs index
-
-| Doc | Purpose |
-|---|---|
-| [WHAT_WE_CLAIM.md](WHAT_WE_CLAIM.md) | Claim boundary |
-| [RELATED_WORK.md](RELATED_WORK.md) | Prior art |
-| [README.ru.md](README.ru.md) | Русская витрина |
-| [analysis/README.md](analysis/README.md) | Analysis how-to |
+Point reviewers at [docs/EVIDENCE_TIERS.md](docs/EVIDENCE_TIERS.md) and [docs/LAB_SCOPE.md](docs/LAB_SCOPE.md).

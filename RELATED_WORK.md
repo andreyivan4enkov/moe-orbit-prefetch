@@ -24,4 +24,4 @@ and lab reports for that assembly. We do **not** claim this is the first paper o
 
 ## Models / licenses
 
-Weights stay on Hugging Face under DeepSeek’s terms. This repo ships **code only** (MIT).
+Weights stay on Hugging Face under DeepSeek’s terms. This repo ships **code only** (Apache-2.0).

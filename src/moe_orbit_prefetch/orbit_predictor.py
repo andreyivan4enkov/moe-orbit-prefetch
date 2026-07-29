@@ -108,9 +108,10 @@ class OrbitPredictor:
             self.last_succ[tok_id] = list(true_experts)
         self.hist_h.append(h)
         self.hist_exp.append(list(true_experts))
-        if len(self.hist_h) > self.window + 8:
-            self.hist_h = self.hist_h[-(self.window + 8) :]
-            self.hist_exp = self.hist_exp[-(self.window + 8) :]
+        # Keep exactly `window` steps (stand size). No magic slack buffer.
+        if len(self.hist_h) > self.window:
+            self.hist_h = self.hist_h[-self.window :]
+            self.hist_exp = self.hist_exp[-self.window :]
         self.n_deposits += 1
 
     def prefetch_set(self, h: np.ndarray, tok_id: int | None, horizon_copies: int = 1) -> list[int]:
