@@ -9,7 +9,7 @@
 | Веса | не в git |
 | Железо автора | MacBook Pro 2019, Intel i9, 16 ГБ RAM, Radeon 4 ГБ; длинные прогоны сильно троттлятся |
 
-См. [docs/SUPPORTED_MODELS.md](docs/SUPPORTED_MODELS.md), [MODEL_CARD.md](MODEL_CARD.md), [docs/LAB_SCOPE.md](docs/LAB_SCOPE.md), [docs/AUTHORSHIP.md](docs/AUTHORSHIP.md), [docs/LOCAL_VALIDATION_20260729.md](docs/LOCAL_VALIDATION_20260729.md).
+См. [docs/SUPPORTED_MODELS.md](docs/SUPPORTED_MODELS.md), [MODEL_CARD.md](MODEL_CARD.md), [docs/LAB_SCOPE.md](docs/LAB_SCOPE.md), [docs/AUTHORSHIP.md](docs/AUTHORSHIP.md), [docs/LOCAL_VALIDATION_20260729.md](docs/LOCAL_VALIDATION_20260729.md), [docs/RESEARCH_INTENT.md](docs/RESEARCH_INTENT.md).
 
 ## Авторство и способ разработки
 

@@ -9,7 +9,7 @@ Weights are **not** shipped; use DeepSeek/HF weights under their terms.
 | Field | Value |
 |---|---|
 | Name | `moe-orbit-prefetch` (Object A) |
-| Version | 0.5.3 |
+| Version | 0.5.4 |
 | Type | Research prototype: MoE expert **prefetch / residency** from residual `h` |
 | License | Apache-2.0 (+ [ATTRIBUTION.md](ATTRIBUTION.md) for substantial products) |
 | Primary target | DeepSeek-V2-Lite / Lite-Chat **and** GigaChat MoE in the same open DeepSeek-style family |
@@ -22,6 +22,7 @@ Weights are **not** shipped; use DeepSeek/HF weights under their terms.
 - Reproduce lean lab smokes and published lean code benches on a laptop-class machine.
 - Apply Object A to **open MoE** networks that expose experts (DeepSeek-style / GigaChat).
 - Compare miss-wait / residency vs a classic baseline (**ours first**, then classic).
+- Explore whether a non-classical architecture can produce **non-noise, structured signal** on real MoE stands; see [docs/RESEARCH_INTENT.md](docs/RESEARCH_INTENT.md).
 
 ## Out of scope
 
@@ -29,6 +30,7 @@ Weights are **not** shipped; use DeepSeek/HF weights under their terms.
 - Claiming SOTA HumanEval or production inference latency.
 - Claiming **every** MoE family without an adapter — see [docs/SUPPORTED_MODELS.md](docs/SUPPORTED_MODELS.md).
 - Treating Tier **S** (synthetic analysis) as Tier **L** (live model) proof — see [docs/EVIDENCE_TIERS.md](docs/EVIDENCE_TIERS.md).
+- Turning architectural pluralism into a proven theory of intelligence from this repository alone — see [docs/RESEARCH_INTENT.md](docs/RESEARCH_INTENT.md).
 
 ## Lab hardware (author)
 

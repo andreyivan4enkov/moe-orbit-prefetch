@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.4 — 2026-07-29
+
+- Added `docs/RESEARCH_INTENT.md` to separate **objective observation** from **interpretive hypothesis**
+- Clarified that “alternative architecture gives non-noise signal” is evidence for further study, **not** proof of a grand intelligence theory
+
 ## 0.5.3 — 2026-07-29
 
 - Tightened public hardware honesty: exact author lab now documented as **MacBook Pro 2019 / Intel i9 / 16 GB RAM / Radeon 4 GB**

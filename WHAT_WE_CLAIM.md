@@ -19,6 +19,7 @@ and [docs/AUDITOR_ISSUES.md](docs/AUDITOR_ISSUES.md) before saying “no real te
    - **GigaChat** (DeepSeek-style MoE): 10B orbit smoke (v21); 20B lean miss-wait (v32); lean code bench miss-wait edge, code tie (v34).
 3. Thresholds inside the predictor use **local field/window statistics** (not magic PASS constants).
 4. **Family scope:** Object A law targets open MoE with accessible experts; packaged runtime is **DeepSeek-family** (including GigaChat). Not every MoE without an adapter — [docs/SUPPORTED_MODELS.md](docs/SUPPORTED_MODELS.md).
+5. **Research meaning:** these stands justify continued study of Object A as a non-noise alternative architecture; they do **not** by themselves prove a general theory. See [docs/RESEARCH_INTENT.md](docs/RESEARCH_INTENT.md).
 
 ## We do **not** claim
 

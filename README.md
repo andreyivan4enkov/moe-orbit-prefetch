@@ -20,6 +20,7 @@ for **open DeepSeek-style MoE** (DeepSeek-V2-Lite **and** GigaChat lab paths).
 | Model / method card | [MODEL_CARD.md](MODEL_CARD.md) |
 | Authorship / AI-assisted workflow | [docs/AUTHORSHIP.md](docs/AUTHORSHIP.md) |
 | Latest local validation | [docs/LOCAL_VALIDATION_20260729.md](docs/LOCAL_VALIDATION_20260729.md) |
+| Research intent / interpretation boundary | [docs/RESEARCH_INTENT.md](docs/RESEARCH_INTENT.md) |
 | Supported families | [docs/SUPPORTED_MODELS.md](docs/SUPPORTED_MODELS.md) |
 | Live vs synthetic evidence | [docs/EVIDENCE_TIERS.md](docs/EVIDENCE_TIERS.md) |
 | Lab hardware limits | [docs/LAB_SCOPE.md](docs/LAB_SCOPE.md) |
@@ -99,7 +100,7 @@ MODEL_CARD.md             # ML-style method card
   year = {2026},
   url = {https://github.com/andreyivan4enkov/moe-orbit-prefetch},
   license = {Apache-2.0},
-  version = {0.5.3}
+  version = {0.5.4}
 }
 ```
 
