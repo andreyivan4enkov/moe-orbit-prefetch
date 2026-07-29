@@ -21,7 +21,7 @@ Legend: **FIXED** in this tree · **PARTIAL** · **OPEN** (accepted) · **OVERST
 
 | ID | Claim | Verdict | Action |
 |---|---|---|---|
-| 2.1 | Deadlock risk one lock | **OPEN** (theoretical; not observed on lean lab) | v0.6 split locks / futures |
+| 2.1 | Deadlock risk one lock | **PARTIAL** — self-deadlock in `relieve`+`store._lock` around `evict_below_mean` **FIXED** (v0.5.6); other lock pairs still OPEN | v0.5.6 + v0.6 split locks |
 | 2.2 | Cancel does not stop worker I/O | **FIXED** — cancel bumps epoch, drains queue, pauses | v0.5 |
 | 2.3 | Predictor shared-state race | **OPEN** | v0.6 document single-writer or lock |
 | 2.4 | Drain / task_done inconsistency | **PARTIAL** — drain exists; hardened with cancel | v0.5+ |
@@ -49,6 +49,7 @@ Legend: **FIXED** in this tree · **PARTIAL** · **OPEN** (accepted) · **OVERST
 | ID | Claim | Verdict | Action |
 |---|---|---|---|
 | 5.1 | Tiny HumanEval lean bench | **ACCEPTED** — honest lean laptop snapshot; 100-task GPU **out of LAB_SCOPE** | external compute welcome |
+| 5.1b | Weak classical baselines | **PARTIAL** — live frequency/LRU/prev_copy miss-wait stand added; orbit **lost** on short MacBook run | results/misswait_baselines_v1.md; cold-cache re-run OPEN |
 | 5.2 | Kind synthetic GT | **ACCEPTED** | Tier S labeled |
 | 5.3 | No long-horizon study | **OPEN** | later |
 

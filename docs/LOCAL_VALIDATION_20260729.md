@@ -166,3 +166,18 @@ What remains outside this session's green zone:
 - wider GPU / multi-device validation
 
 So the repository can be updated **honestly** if the release notes say exactly that, and do **not** claim a fresh full revalidation of every historical lab artifact.
+
+## F. Short miss-wait baselines (same session / continuation)
+
+Command:
+
+```bash
+/Users/corpuscul/Desktop/theory_megaattractor/.venv/bin/python \
+  examples/bench_misswait_baselines_v1/bench_misswait_baselines_v1.py --max-new 8 --n-prompts 2
+```
+
+Result: **FAIL_OURS_NOT_BETTER_ON_COMPARED** (orbit mean miss 179.36s vs frequency 115.39s / lru 157.07s / prev_copy 156.63s / none 148.95s; wins=0 losses=2 each).
+
+Also fixed self-deadlock in `relieve*` wrapping `evict_below_mean` under `store._lock`.
+
+Published: `results/misswait_baselines_v1.md`.

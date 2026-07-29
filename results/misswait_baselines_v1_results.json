@@ -1,0 +1,261 @@
+{
+  "benchmark": "bench_misswait_baselines_v1",
+  "stamp": "20260729_105315",
+  "hardware": "MacBook Pro 2019 Intel i9 16GB Radeon4GB (thermal throttling)",
+  "max_new": 8,
+  "n_prompts": 2,
+  "stop_reason": null,
+  "by_mode": {
+    "orbit": [
+      {
+        "mode": "orbit",
+        "prompt_head": "Write a Python function add(a, b) that returns a+b. Output ONLY the function.",
+        "reply_head": "```python def add(a,",
+        "reply_len": 20,
+        "tokens_out": 8,
+        "wall_s": 372.578,
+        "miss_wait_s": 158.9506,
+        "gate_hit": 76,
+        "gate_miss": 2350,
+        "modeled_hit": 328,
+        "n_prefetch_failures": 0,
+        "ok": true
+      },
+      {
+        "mode": "orbit",
+        "prompt_head": "Fix this bug and output ONLY the corrected function: def mul(x, y):     return x",
+        "reply_head": "def mul(x, y):",
+        "reply_len": 14,
+        "tokens_out": 8,
+        "wall_s": 484.494,
+        "miss_wait_s": 199.7722,
+        "gate_hit": 161,
+        "gate_miss": 2355,
+        "modeled_hit": 508,
+        "n_prefetch_failures": 0,
+        "ok": true
+      }
+    ],
+    "frequency": [
+      {
+        "mode": "frequency",
+        "prompt_head": "Write a Python function add(a, b) that returns a+b. Output ONLY the function.",
+        "reply_head": "```python def add(a,",
+        "reply_len": 20,
+        "tokens_out": 8,
+        "wall_s": 304.804,
+        "miss_wait_s": 133.3594,
+        "gate_hit": 184,
+        "gate_miss": 2242,
+        "modeled_hit": 282,
+        "n_prefetch_failures": 0,
+        "ok": true
+      },
+      {
+        "mode": "frequency",
+        "prompt_head": "Fix this bug and output ONLY the corrected function: def mul(x, y):     return x",
+        "reply_head": "def mul(x, y):",
+        "reply_len": 14,
+        "tokens_out": 8,
+        "wall_s": 210.407,
+        "miss_wait_s": 97.4237,
+        "gate_hit": 164,
+        "gate_miss": 2352,
+        "modeled_hit": 264,
+        "n_prefetch_failures": 0,
+        "ok": true
+      }
+    ],
+    "lru": [
+      {
+        "mode": "lru",
+        "prompt_head": "Write a Python function add(a, b) that returns a+b. Output ONLY the function.",
+        "reply_head": "```python def add(a,",
+        "reply_len": 20,
+        "tokens_out": 8,
+        "wall_s": 350.756,
+        "miss_wait_s": 147.0536,
+        "gate_hit": 187,
+        "gate_miss": 2239,
+        "modeled_hit": 222,
+        "n_prefetch_failures": 0,
+        "ok": true
+      },
+      {
+        "mode": "lru",
+        "prompt_head": "Fix this bug and output ONLY the corrected function: def mul(x, y):     return x",
+        "reply_head": "def mul(x, y):",
+        "reply_len": 14,
+        "tokens_out": 8,
+        "wall_s": 402.264,
+        "miss_wait_s": 167.0937,
+        "gate_hit": 212,
+        "gate_miss": 2304,
+        "modeled_hit": 144,
+        "n_prefetch_failures": 0,
+        "ok": true
+      }
+    ],
+    "prev_copy": [
+      {
+        "mode": "prev_copy",
+        "prompt_head": "Write a Python function add(a, b) that returns a+b. Output ONLY the function.",
+        "reply_head": "```python def add(a,",
+        "reply_len": 20,
+        "tokens_out": 8,
+        "wall_s": 358.683,
+        "miss_wait_s": 147.2018,
+        "gate_hit": 199,
+        "gate_miss": 2227,
+        "modeled_hit": 222,
+        "n_prefetch_failures": 0,
+        "ok": true
+      },
+      {
+        "mode": "prev_copy",
+        "prompt_head": "Fix this bug and output ONLY the corrected function: def mul(x, y):     return x",
+        "reply_head": "def mul(x, y):",
+        "reply_len": 14,
+        "tokens_out": 8,
+        "wall_s": 416.199,
+        "miss_wait_s": 166.0516,
+        "gate_hit": 232,
+        "gate_miss": 2284,
+        "modeled_hit": 360,
+        "n_prefetch_failures": 0,
+        "ok": true
+      }
+    ],
+    "none": [
+      {
+        "mode": "none",
+        "prompt_head": "Write a Python function add(a, b) that returns a+b. Output ONLY the function.",
+        "reply_head": "```python def add(a,",
+        "reply_len": 20,
+        "tokens_out": 8,
+        "wall_s": 323.673,
+        "miss_wait_s": 148.8184,
+        "gate_hit": 57,
+        "gate_miss": 2369,
+        "modeled_hit": 0,
+        "n_prefetch_failures": 0,
+        "ok": true
+      },
+      {
+        "mode": "none",
+        "prompt_head": "Fix this bug and output ONLY the corrected function: def mul(x, y):     return x",
+        "reply_head": "def mul(x, y):",
+        "reply_len": 14,
+        "tokens_out": 8,
+        "wall_s": 332.616,
+        "miss_wait_s": 149.0871,
+        "gate_hit": 69,
+        "gate_miss": 2447,
+        "modeled_hit": 0,
+        "n_prefetch_failures": 0,
+        "ok": true
+      }
+    ]
+  },
+  "comparisons": {
+    "frequency": {
+      "status": "compared",
+      "ours_better_miss": false,
+      "votes": {
+        "gap": -63.96985000000001,
+        "mad": 38.37864999999999,
+        "n": 2,
+        "wins": 0,
+        "losses": 2,
+        "win_frac": 0.0,
+        "skipped_nonfinite": 0
+      },
+      "mean_miss_ours": 179.3614,
+      "mean_miss_other": 115.39155,
+      "per_prompt_ours": [
+        158.9506,
+        199.7722
+      ],
+      "per_prompt_other": [
+        133.3594,
+        97.4237
+      ]
+    },
+    "lru": {
+      "status": "compared",
+      "ours_better_miss": false,
+      "votes": {
+        "gap": -22.287750000000003,
+        "mad": 10.390749999999983,
+        "n": 2,
+        "wins": 0,
+        "losses": 2,
+        "win_frac": 0.0,
+        "skipped_nonfinite": 0
+      },
+      "mean_miss_ours": 179.3614,
+      "mean_miss_other": 157.07365,
+      "per_prompt_ours": [
+        158.9506,
+        199.7722
+      ],
+      "per_prompt_other": [
+        147.0536,
+        167.0937
+      ]
+    },
+    "prev_copy": {
+      "status": "compared",
+      "ours_better_miss": false,
+      "votes": {
+        "gap": -22.734700000000004,
+        "mad": 10.985899999999987,
+        "n": 2,
+        "wins": 0,
+        "losses": 2,
+        "win_frac": 0.0,
+        "skipped_nonfinite": 0
+      },
+      "mean_miss_ours": 179.3614,
+      "mean_miss_other": 156.6267,
+      "per_prompt_ours": [
+        158.9506,
+        199.7722
+      ],
+      "per_prompt_other": [
+        147.2018,
+        166.0516
+      ]
+    },
+    "none": {
+      "status": "compared",
+      "ours_better_miss": false,
+      "votes": {
+        "gap": -30.40865000000001,
+        "mad": 20.276449999999997,
+        "n": 2,
+        "wins": 0,
+        "losses": 2,
+        "win_frac": 0.0,
+        "skipped_nonfinite": 0
+      },
+      "mean_miss_ours": 179.3614,
+      "mean_miss_other": 148.95274999999998,
+      "per_prompt_ours": [
+        158.9506,
+        199.7722
+      ],
+      "per_prompt_other": [
+        148.8184,
+        149.0871
+      ]
+    }
+  },
+  "ontology_checklist": {
+    "predict_from_embeddings_topology_for_ours": true,
+    "classic_baselines_are_not_ours": true,
+    "no_oracle_deposit": true,
+    "ours_first_then_classic": true,
+    "emergent_wins_gt_losses": true
+  }
+}

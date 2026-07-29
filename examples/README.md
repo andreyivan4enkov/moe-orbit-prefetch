@@ -8,5 +8,6 @@
 | `04_chat_ask.py` | HF cache | End-to-end sparse chat + orbit |
 | `05_gigachat_store_smoke.py` | HF cache | GigaChat 10B/20B store-path smoke |
 | `bench_humaneval_lean/bench_humaneval_lean.py` | HF cache | Ours vs classic lean code bench (long) |
+| `bench_misswait_baselines_v1/bench_misswait_baselines_v1.py` | HF cache | Short miss-wait: orbit → frequency/LRU/prev_copy/none |
 
 Weights: download yourself under DeepSeek/HF terms. Not in git.

@@ -91,7 +91,12 @@ class LeanDeepseekRuntime(SparseDeepseekRuntime):
         dropped = 0
         with store._lock:
             while store.n_hot() > cap and store.hot:
-                key = min(store.hot.keys(), key=lambda k: store.s_env.get(k, 0.0))
+                # Never evict an expert that another thread is still publishing;
+                # that race left waiters blocked on Event with empty hot.
+                candidates = [k for k in store.hot if k not in store._loading]
+                if not candidates:
+                    break
+                key = min(candidates, key=lambda k: store.s_env.get(k, 0.0))
                 pack = store.hot.pop(key)
                 seen: set[int] = set()
                 for t in pack.values():
@@ -572,8 +577,8 @@ def relieve_memory_pressure(runtime: SparseDeepseekRuntime) -> int:
     dropped_n = 0
     store = runtime.experts
     if store is not None:
-        with store._lock:
-            dropped_n += len(store.evict_below_mean())
+        # evict_below_mean → drop_expert already takes store._lock (non-reentrant).
+        dropped_n += len(store.evict_below_mean())
         if hasattr(runtime, "trim_hot_to_orbit_cap"):
             dropped_n += int(runtime.trim_hot_to_orbit_cap())  # type: ignore[attr-defined]
         else:

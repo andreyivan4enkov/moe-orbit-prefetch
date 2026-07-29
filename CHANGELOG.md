@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.5.6 — 2026-07-29
+
+- Live miss-wait head-to-head vs classical predictors: frequency / LRU / prev_copy / none
+  (`examples/bench_misswait_baselines_v1/`) — **ours first**, emergent `wins > losses`
+- Result on MacBook short stand: **FAIL** (orbit miss-wait worse than compared classics);
+  published honestly in `results/misswait_baselines_v1.md`
+- Fix self-deadlock: `relieve*` must not hold `store._lock` around `evict_below_mean`
+- Expert store: coalesce wait takeover if trim races / timed-out loader; lean trim skips `_loading` keys
+- `classic_prefetch_predictors.py` + unit test for classic predictor API
+
 ## 0.5.5 — 2026-07-29
 
 - Added public `examples/05_gigachat_store_smoke.py` for MacBook-checkable GigaChat store validation

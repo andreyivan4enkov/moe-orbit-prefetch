@@ -147,30 +147,41 @@ class DynamicExpertStore:
                 "(set True only with a VRAM budget / memory guard). Prefer device='cpu'."
             )
         key = (layer, expert_id)
-        wait_ev: threading.Event | None = None
-        we_load = False
-        with self._lock:
-            if key in self.hot:
-                self.n_hits += 1
-                self.s_env[key] = self.s_env.get(key, 0.0) + 1.0
-                return self.hot[key]
-            if key in self._loading:
-                wait_ev = self._loading[key]
-                self.n_coalesced_waits += 1
-            else:
-                wait_ev = threading.Event()
-                self._loading[key] = wait_ev
-                we_load = True
-                self.n_misses += 1
-
-        if not we_load:
-            assert wait_ev is not None
-            wait_ev.wait(timeout=600.0)
+        # Coalesce + takeover: if the in-flight loader is dropped by sleep/trim
+        # before publishing `hot`, waiters must not hang forever — they become loader.
+        for _attempt in range(3):
+            wait_ev: threading.Event | None = None
+            we_load = False
             with self._lock:
                 if key in self.hot:
                     self.n_hits += 1
                     self.s_env[key] = self.s_env.get(key, 0.0) + 1.0
                     return self.hot[key]
+                if key in self._loading:
+                    wait_ev = self._loading[key]
+                    self.n_coalesced_waits += 1
+                else:
+                    wait_ev = threading.Event()
+                    self._loading[key] = wait_ev
+                    we_load = True
+                    self.n_misses += 1
+
+            if we_load:
+                break
+
+            assert wait_ev is not None
+            wait_ev.wait(timeout=120.0)
+            with self._lock:
+                if key in self.hot:
+                    self.n_hits += 1
+                    self.s_env[key] = self.s_env.get(key, 0.0) + 1.0
+                    return self.hot[key]
+                # Trim race or hang/timeout: clear our wait marker so next loop
+                # can become the loader (never block forever on a dead publish).
+                if self._loading.get(key) is wait_ev:
+                    self._loading.pop(key, None)
+                continue
+        else:
             raise RuntimeError(f"coalesced wait failed for expert {key}")
 
         try:

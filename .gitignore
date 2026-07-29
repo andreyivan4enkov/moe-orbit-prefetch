@@ -13,3 +13,7 @@ build/
 *.safetensors
 examples/logs/
 examples/reports/
+
+# versioned example run artifacts
+examples/**/logs/
+examples/**/reports/

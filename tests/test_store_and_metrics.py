@@ -105,3 +105,21 @@ def test_emerges_greater_skips_nan():
     assert ok
     assert st["wins"] == 2
     assert st["skipped_nonfinite"] == 1
+
+
+def test_classic_prefetch_predictors_api():
+    from moe_orbit_prefetch.classic_prefetch_predictors import (
+        FrequencyPredictor,
+        LruPredictor,
+        PrevCopyPredictor,
+    )
+
+    h = np.zeros(8)
+    for Cls in (FrequencyPredictor, LruPredictor, PrevCopyPredictor):
+        p = Cls(n_experts=64, top_k=6)
+        pred = p.predict(h, tok_id=3)
+        assert len(pred) == 6
+        p.deposit(h, [1, 2, 3, 4, 5, 6], tok_id=3)
+        hz = p.predict_token_horizon(h, 3, 2)
+        assert len(hz) == 2
+        assert p.learning_stats()["n_deposits"] == 1.0
