@@ -21,6 +21,8 @@ for **open DeepSeek-style MoE** (DeepSeek-V2-Lite **and** GigaChat lab paths).
 | Authorship / AI-assisted workflow | [docs/AUTHORSHIP.md](docs/AUTHORSHIP.md) |
 | Latest local validation | [docs/LOCAL_VALIDATION_20260729.md](docs/LOCAL_VALIDATION_20260729.md) |
 | Research intent / interpretation boundary | [docs/RESEARCH_INTENT.md](docs/RESEARCH_INTENT.md) |
+| What it actually gives / adjacent uses | [docs/WHAT_IT_ACTUALLY_GIVES.md](docs/WHAT_IT_ACTUALLY_GIVES.md) |
+| Still unchecked | [docs/OPEN_CHECKS.md](docs/OPEN_CHECKS.md) |
 | Supported families | [docs/SUPPORTED_MODELS.md](docs/SUPPORTED_MODELS.md) |
 | Live vs synthetic evidence | [docs/EVIDENCE_TIERS.md](docs/EVIDENCE_TIERS.md) |
 | Lab hardware limits | [docs/LAB_SCOPE.md](docs/LAB_SCOPE.md) |
@@ -37,7 +39,7 @@ for **open DeepSeek-style MoE** (DeepSeek-V2-Lite **and** GigaChat lab paths).
 | 100-task GPU HumanEval? | **Not claimed** — out of author laptop scope |
 | Synthetic plots? | Tier **S** only — not live-gate proof |
 | Lean code (DeepSeek v36 / GigaChat v34) | pass@1 **tie** with classic |
-| Prefetch | miss-wait **ours better** on lean HumanEval stands; short vs frequency/LRU/prev_copy on MacBook: **FAIL** ([results/misswait_baselines_v1.md](results/misswait_baselines_v1.md)) |
+| Prefetch | lean HumanEval: miss-wait **ours better vs none**; short vs freq/LRU/SGD: can **FAIL** ([v1](results/misswait_baselines_v1.md), [v2](results/misswait_baselines_v2.md)) |
 
 ## Install
 
@@ -100,7 +102,7 @@ MODEL_CARD.md             # ML-style method card
   year = {2026},
   url = {https://github.com/andreyivan4enkov/moe-orbit-prefetch},
   license = {Apache-2.0},
-  version = {0.5.6}
+  version = {0.5.7}
 }
 ```
 

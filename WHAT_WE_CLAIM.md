@@ -15,11 +15,12 @@ and [docs/AUDITOR_ISSUES.md](docs/AUDITOR_ISSUES.md) before saying “no real te
    - **`deepseek_chat_engine`** — chat helper on top of that runtime
    - runnable examples + lean HumanEval/QuixBugs bench: `examples/bench_humaneval_lean/`
 2. **Empirical lab results on real open MoE** (author laptop — see `results/`):
-   - **DeepSeek-V2-Lite(-Chat):** expert slice + sleep (v13); lean code bench miss-wait edge, code tie (v36); late learning↑ False on that lean.
-   - **GigaChat** (DeepSeek-style MoE): 10B orbit smoke (v21); 20B lean miss-wait (v32); lean code bench miss-wait edge, code tie (v34).
+   - **DeepSeek-V2-Lite(-Chat):** expert slice + sleep (v13); lean code bench miss-wait edge vs **none**, code tie (v36); late learning↑ False on that lean.
+   - **GigaChat** (DeepSeek-style MoE): 10B orbit smoke (v21); 20B lean miss-wait (v32); lean code bench miss-wait edge vs **none**, code tie (v34).
+   - **Short miss-wait vs stronger classics** (frequency / LRU / prev_copy / SGD / none): see `results/misswait_baselines_v1.md` and `v2` — **orbit can lose**; public docs keep both lean edge and short FAIL.
 3. Thresholds inside the predictor use **local field/window statistics** (not magic PASS constants).
 4. **Family scope:** Object A law targets open MoE with accessible experts; packaged runtime is **DeepSeek-family** (including GigaChat). Not every MoE without an adapter — [docs/SUPPORTED_MODELS.md](docs/SUPPORTED_MODELS.md).
-5. **Research meaning:** these stands justify continued study of Object A as a non-noise alternative architecture; they do **not** by themselves prove a general theory. See [docs/RESEARCH_INTENT.md](docs/RESEARCH_INTENT.md).
+5. **Research meaning:** these stands justify continued study of Object A as a non-noise alternative architecture **on some questions**; they do **not** prove universal superiority. See [docs/RESEARCH_INTENT.md](docs/RESEARCH_INTENT.md), [docs/WHAT_IT_ACTUALLY_GIVES.md](docs/WHAT_IT_ACTUALLY_GIVES.md), [docs/OPEN_CHECKS.md](docs/OPEN_CHECKS.md).
 
 ## We do **not** claim
 
@@ -33,6 +34,7 @@ and [docs/AUDITOR_ISSUES.md](docs/AUDITOR_ISSUES.md) before saying “no real te
 | Full HumanEval (100+) / multi-GPU sweep | **Out of author lab scope** — see LAB_SCOPE.md |
 | Drop-in for Mixtral / Qwen-MoE / closed APIs | Needs a new weight/attention adapter |
 | Guaranteed rising predict-hit over long runs | DeepSeek v36 lean: late hit did **not** beat early |
+| Guaranteed miss-wait win vs frequency/SGD/LRU | Short MacBook stands can show **FAIL** — see misswait_baselines_v1/v2 |
 | Tier S synthetic hit = live gate hit | Offline analysis is learnable by design — see EVIDENCE_TIERS |
 
 ## Honesty rule

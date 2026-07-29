@@ -177,3 +177,52 @@ class PrevCopyPredictor(_BaseClassic):
                 for k in keys[: len(keys) - self.window]:
                     self.last_succ.pop(k, None)
         self.n_deposits += 1
+
+
+@dataclass
+class OnlineSgdPredictor(_BaseClassic):
+    """
+    Classical online SGD + sigmoid: score_e = w_e · h, target = multi-hot live experts.
+
+    Same baseline family used elsewhere in the maintainer's stands (not Object A).
+    Step size `lr` is the classical online rate from that baseline convention.
+    """
+
+    lr: float = 0.05
+    w: np.ndarray | None = field(default=None, repr=False)
+
+    def _unit(self, h: np.ndarray) -> np.ndarray:
+        h = np.asarray(h, dtype=np.float64).ravel()
+        return h / (np.linalg.norm(h) + np.finfo(np.float64).eps)
+
+    def _ensure(self, dim: int) -> None:
+        if self.w is not None and self.w.shape == (self.n_experts, dim):
+            return
+        rng = np.random.default_rng(0)
+        self.w = rng.normal(0.0, 0.01, size=(self.n_experts, dim)).astype(np.float64)
+
+    def predict(self, h: np.ndarray, tok_id: int | None = None) -> list[int]:
+        del tok_id
+        h = self._unit(h)
+        self._ensure(int(h.size))
+        assert self.w is not None
+        scores = self.w @ h
+        return [int(i) for i in np.argsort(-scores)[: self.top_k]]
+
+    def deposit(
+        self, h: np.ndarray, true_experts: list[int], tok_id: int | None = None
+    ) -> None:
+        h = self._unit(h)
+        pred = self.predict(h, tok_id)
+        self._record_hit(pred, true_experts)
+        self._ensure(int(h.size))
+        assert self.w is not None
+        target = np.zeros(self.n_experts, dtype=np.float64)
+        for e in true_experts:
+            eid = int(e)
+            if 0 <= eid < self.n_experts:
+                target[eid] = 1.0
+        logits = np.clip(self.w @ h, -20.0, 20.0)
+        prob = 1.0 / (1.0 + np.exp(-logits))
+        self.w += self.lr * np.outer(target - prob, h)
+        self.n_deposits += 1

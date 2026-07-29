@@ -23,8 +23,9 @@ That is a **research filter**, not a victory claim.
 - On the published lean live stands, Object A is **not random noise**.
 - It shows structured behavior on real MoE models.
 - On some published stands it is **comparable** to classical baselines on code quality.
-- On some published stands it is **better** on miss-wait / residency cost.
-- On other aspects it is weaker or inconclusive (for example, late-learning growth was not confirmed in DeepSeek v36).
+- On some published stands it is **better** on miss-wait vs **no modeled prefetch** (`none`).
+- On short MacBook stands vs **frequency / LRU / prev_copy / SGD**, miss-wait can be **worse** (published FAIL).
+- Late-learning growth was **not** confirmed in DeepSeek v36.
 
 ### Interpretation (allowed, but must be labeled)
 

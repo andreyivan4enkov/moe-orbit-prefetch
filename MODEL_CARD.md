@@ -9,7 +9,7 @@ Weights are **not** shipped; use DeepSeek/HF weights under their terms.
 | Field | Value |
 |---|---|
 | Name | `moe-orbit-prefetch` (Object A) |
-| Version | 0.5.6 |
+| Version | 0.5.7 |
 | Type | Research prototype: MoE expert **prefetch / residency** from residual `h` |
 | License | Apache-2.0 (+ [ATTRIBUTION.md](ATTRIBUTION.md) for substantial products) |
 | Primary target | DeepSeek-V2-Lite / Lite-Chat **and** GigaChat MoE in the same open DeepSeek-style family |

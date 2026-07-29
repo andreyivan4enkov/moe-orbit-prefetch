@@ -17,7 +17,7 @@ __all__ = [
     "get_engine",
 ]
 
-__version__ = "0.5.6"
+__version__ = "0.5.7"
 
 
 def __getattr__(name: str):

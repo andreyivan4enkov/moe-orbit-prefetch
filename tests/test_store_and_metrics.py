@@ -111,11 +111,12 @@ def test_classic_prefetch_predictors_api():
     from moe_orbit_prefetch.classic_prefetch_predictors import (
         FrequencyPredictor,
         LruPredictor,
+        OnlineSgdPredictor,
         PrevCopyPredictor,
     )
 
     h = np.zeros(8)
-    for Cls in (FrequencyPredictor, LruPredictor, PrevCopyPredictor):
+    for Cls in (FrequencyPredictor, LruPredictor, PrevCopyPredictor, OnlineSgdPredictor):
         p = Cls(n_experts=64, top_k=6)
         pred = p.predict(h, tok_id=3)
         assert len(pred) == 6

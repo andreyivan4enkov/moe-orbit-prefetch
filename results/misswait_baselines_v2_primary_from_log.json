@@ -1,0 +1,27 @@
+{
+  "benchmark": "bench_misswait_baselines_v2",
+  "phase": "primary",
+  "source_log": "examples/bench_misswait_baselines_v2/logs/bench_misswait_baselines_v2_20260729_122829.log",
+  "note": "Primary finished; parent process died during later cache_sens. Numbers transcribed from completed → ok lines.",
+  "hardware": "MacBook Pro 2019 Intel i9 16GB Radeon4GB (thermal throttling)",
+  "max_new": 8,
+  "n_prompts": 2,
+  "by_mode": {
+    "orbit": [{"miss_wait_s": 124.60}, {"miss_wait_s": 152.20}],
+    "sgd": [{"miss_wait_s": 145.11}, {"miss_wait_s": 139.65}],
+    "frequency": [{"miss_wait_s": 138.15}, {"miss_wait_s": 94.76}],
+    "none": [{"miss_wait_s": 113.57}, {"miss_wait_s": 127.72}]
+  },
+  "means": {
+    "orbit": 138.40,
+    "sgd": 142.38,
+    "frequency": 116.455,
+    "none": 120.645
+  },
+  "comparisons_wins_losses_ours_better_miss": {
+    "sgd": {"wins": 1, "losses": 1, "pass": false},
+    "frequency": {"wins": 1, "losses": 1, "pass": false},
+    "none": {"wins": 0, "losses": 2, "pass": false}
+  },
+  "verdict": "FAIL_OURS_NOT_BETTER_ON_COMPARED"
+}

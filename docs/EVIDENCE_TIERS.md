@@ -26,6 +26,7 @@ This repository contains **two different kinds of evidence**. Mixing them is the
 | [results/gigachat_v32_lean.md](../results/gigachat_v32_lean.md) | GigaChat-20B | miss-wait / decode edge vs classic |
 | [results/gigachat_v34_humaneval.md](../results/gigachat_v34_humaneval.md) | GigaChat-20B | lean code: pass@1 tie; miss-wait ours better |
 | [results/misswait_baselines_v1.md](../results/misswait_baselines_v1.md) | DeepSeek-V2-Lite-Chat | Short miss-wait vs frequency/LRU/prev_copy/none: **FAIL** (ours worse on this stand) |
+| [results/misswait_baselines_v2.md](../results/misswait_baselines_v2.md) | DeepSeek-V2-Lite-Chat | +SGD; primary **FAIL**; cache_sens **MIXED** (orbit last beats freq, loses to none) |
 
 ### How to re-run Tier L yourself
 

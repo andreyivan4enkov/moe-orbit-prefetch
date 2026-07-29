@@ -49,7 +49,7 @@ Legend: **FIXED** in this tree · **PARTIAL** · **OPEN** (accepted) · **OVERST
 | ID | Claim | Verdict | Action |
 |---|---|---|---|
 | 5.1 | Tiny HumanEval lean bench | **ACCEPTED** — honest lean laptop snapshot; 100-task GPU **out of LAB_SCOPE** | external compute welcome |
-| 5.1b | Weak classical baselines | **PARTIAL** — live frequency/LRU/prev_copy miss-wait stand added; orbit **lost** on short MacBook run | results/misswait_baselines_v1.md; cold-cache re-run OPEN |
+| 5.1b | Weak classical baselines | **PARTIAL** — live frequency/LRU/prev_copy (v1 FAIL) + online SGD + cache_sens (v2 FAIL/MIXED) | results/misswait_baselines_v*.md; full cold-disk still OPEN |
 | 5.2 | Kind synthetic GT | **ACCEPTED** | Tier S labeled |
 | 5.3 | No long-horizon study | **OPEN** | later |
 

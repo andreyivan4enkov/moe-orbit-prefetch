@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.7 — 2026-07-29
+
+- Honest gap map: `docs/OPEN_CHECKS.md`
+- What the work actually gives + grounded adjacent uses (no fantasy): `docs/WHAT_IT_ACTUALLY_GIVES.md`
+- Live miss-wait v2: online **SGD** baseline + cache-order sensitivity (`examples/bench_misswait_baselines_v2/`)
+- Results: primary **FAIL** vs SGD/frequency/none; cache_sens **MIXED** — `results/misswait_baselines_v2.md`
+- Claim boundary updated so lean miss-wait edge and short FAILs are both visible (`WHAT_WE_CLAIM.md`, `RESEARCH_INTENT.md`)
+
 ## 0.5.6 — 2026-07-29
 
 - Live miss-wait head-to-head vs classical predictors: frequency / LRU / prev_copy / none

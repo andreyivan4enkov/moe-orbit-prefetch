@@ -1,0 +1,177 @@
+{
+  "benchmark": "bench_misswait_baselines_v2",
+  "stamp": "20260729_135421",
+  "hardware": "MacBook Pro 2019 Intel i9 16GB Radeon4GB (thermal throttling)",
+  "max_new": 8,
+  "n_prompts": 2,
+  "phase_arg": "cache_sens",
+  "phases": [
+    {
+      "phase": "cache_sens",
+      "modes": [
+        [
+          "frequency",
+          "classic"
+        ],
+        [
+          "none",
+          "classic"
+        ],
+        [
+          "orbit",
+          "ours"
+        ]
+      ],
+      "by_mode": {
+        "frequency": [
+          {
+            "mode": "frequency",
+            "prompt_head": "Write a Python function add(a, b) that returns a+b. Output ONLY the function.",
+            "reply_head": "```python def add(a,",
+            "reply_len": 20,
+            "tokens_out": 8,
+            "wall_s": 344.713,
+            "miss_wait_s": 137.6827,
+            "gate_hit": 73,
+            "gate_miss": 2353,
+            "modeled_hit": 282,
+            "n_prefetch_failures": 0,
+            "ok": true
+          },
+          {
+            "mode": "frequency",
+            "prompt_head": "Fix this bug and output ONLY the corrected function: def mul(x, y):     return x",
+            "reply_head": "def mul(x, y):",
+            "reply_len": 14,
+            "tokens_out": 8,
+            "wall_s": 363.068,
+            "miss_wait_s": 143.36,
+            "gate_hit": 182,
+            "gate_miss": 2334,
+            "modeled_hit": 264,
+            "n_prefetch_failures": 0,
+            "ok": true
+          }
+        ],
+        "none": [
+          {
+            "mode": "none",
+            "prompt_head": "Write a Python function add(a, b) that returns a+b. Output ONLY the function.",
+            "reply_head": "```python def add(a,",
+            "reply_len": 20,
+            "tokens_out": 8,
+            "wall_s": 192.905,
+            "miss_wait_s": 101.6999,
+            "gate_hit": 65,
+            "gate_miss": 2361,
+            "modeled_hit": 0,
+            "n_prefetch_failures": 0,
+            "ok": true
+          },
+          {
+            "mode": "none",
+            "prompt_head": "Fix this bug and output ONLY the corrected function: def mul(x, y):     return x",
+            "reply_head": "def mul(x, y):",
+            "reply_len": 14,
+            "tokens_out": 8,
+            "wall_s": 215.232,
+            "miss_wait_s": 108.0944,
+            "gate_hit": 66,
+            "gate_miss": 2450,
+            "modeled_hit": 0,
+            "n_prefetch_failures": 0,
+            "ok": true
+          }
+        ],
+        "orbit": [
+          {
+            "mode": "orbit",
+            "prompt_head": "Write a Python function add(a, b) that returns a+b. Output ONLY the function.",
+            "reply_head": "```python def add(a,",
+            "reply_len": 20,
+            "tokens_out": 8,
+            "wall_s": 333.364,
+            "miss_wait_s": 134.2914,
+            "gate_hit": 182,
+            "gate_miss": 2244,
+            "modeled_hit": 328,
+            "n_prefetch_failures": 0,
+            "ok": true
+          },
+          {
+            "mode": "orbit",
+            "prompt_head": "Fix this bug and output ONLY the corrected function: def mul(x, y):     return x",
+            "reply_head": "def mul(x, y):",
+            "reply_len": 14,
+            "tokens_out": 8,
+            "wall_s": 311.3,
+            "miss_wait_s": 127.2865,
+            "gate_hit": 204,
+            "gate_miss": 2312,
+            "modeled_hit": 508,
+            "n_prefetch_failures": 0,
+            "ok": true
+          }
+        ]
+      },
+      "comparisons": {
+        "frequency": {
+          "status": "compared",
+          "ours_better_miss": true,
+          "votes": {
+            "gap": 9.732400000000005,
+            "mad": 6.341100000000004,
+            "n": 2,
+            "wins": 2,
+            "losses": 0,
+            "win_frac": 1.0,
+            "skipped_nonfinite": 0
+          },
+          "mean_miss_ours": 130.78895,
+          "mean_miss_other": 140.52135,
+          "per_prompt_ours": [
+            134.2914,
+            127.2865
+          ],
+          "per_prompt_other": [
+            137.6827,
+            143.36
+          ]
+        },
+        "none": {
+          "status": "compared",
+          "ours_better_miss": false,
+          "votes": {
+            "gap": -25.89180000000001,
+            "mad": 6.6997,
+            "n": 2,
+            "wins": 0,
+            "losses": 2,
+            "win_frac": 0.0,
+            "skipped_nonfinite": 0
+          },
+          "mean_miss_ours": 130.78895,
+          "mean_miss_other": 104.89715,
+          "per_prompt_ours": [
+            134.2914,
+            127.2865
+          ],
+          "per_prompt_other": [
+            101.6999,
+            108.0944
+          ]
+        }
+      },
+      "stop_reason": null
+    }
+  ],
+  "ontology_checklist": {
+    "predict_from_embeddings_topology_for_ours": true,
+    "classic_baselines_are_not_ours": true,
+    "includes_online_sgd": true,
+    "no_oracle_deposit": true,
+    "ours_first_on_primary_phase": true,
+    "cache_sens_is_partial_not_disk_cold": true,
+    "emergent_wins_gt_losses": true
+  }
+}
