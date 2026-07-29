@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.5 — 2026-07-29
+
+- Added public `examples/05_gigachat_store_smoke.py` for MacBook-checkable GigaChat store validation
+- Verified editable install/import path and expanded `LOCAL_VALIDATION_20260729.md`
+- Ignored generated `examples/logs/` and `examples/reports/` so honest local runs do not dirty the tree
+
 ## 0.5.4 — 2026-07-29
 
 - Added `docs/RESEARCH_INTENT.md` to separate **objective observation** from **interpretive hypothesis**

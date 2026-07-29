@@ -6,7 +6,7 @@ No synthetic analysis scripts were used for the verdict below.
 ## Environment
 
 - Repository: `moe-orbit-prefetch`
-- Machine: author MacBook-class laptop
+- Machine: MacBook Pro (2019), Intel Core i9, 16 GB RAM, Radeon 4 GB
 - Python: `/Users/corpuscul/Desktop/theory_megaattractor/.venv/bin/python`
 - Weight sources: local Hugging Face cache
 
@@ -15,7 +15,8 @@ No synthetic analysis scripts were used for the verdict below.
 1. `SparseDeepseekRuntime`: shared modeled-prefetch state is now updated/snapshotted under `_state_lock`
    (`_cur_tok_id`, `last_h_vec`) to reduce races between main path and prefetch path.
 2. `examples/03_smoke_dynamic_weights_v13.py`: fixed `sys.path` bootstrap so the smoke script runs from a clean clone.
-3. Added `docs/AUTHORSHIP.md` and linked it from public docs to state the AI-assisted implementation workflow and the maintainer's role honestly.
+3. Added `examples/05_gigachat_store_smoke.py` so GigaChat store-path can be checked by a public one-command example instead of an ad-hoc snippet.
+4. Added `docs/AUTHORSHIP.md` and linked it from public docs to state the AI-assisted implementation workflow and the maintainer's role honestly.
 
 ## Objective checks run
 
@@ -28,6 +29,17 @@ Command:
 ```
 
 Result: **PASS** (`5 passed`)
+
+### A2. Editable install / import smoke
+
+Commands:
+
+```bash
+/Users/corpuscul/Desktop/theory_megaattractor/.venv/bin/python -m pip install -e .
+/Users/corpuscul/Desktop/theory_megaattractor/.venv/bin/python -c "import moe_orbit_prefetch as m; print(m.__version__)"
+```
+
+Result: **PASS** (`import_ok 0.5.4` at validation time)
 
 ### B. DeepSeek live smoke — expert slice
 
@@ -95,23 +107,12 @@ Observed:
 Hello! How can I help you today? If you have any questions or need
 ```
 
-### E. GigaChat live smoke — store path on 10B
+### E. GigaChat live smoke — public store path on 10B
 
 Command:
 
 ```bash
-PYTHONPATH=src /Users/corpuscul/Desktop/theory_megaattractor/.venv/bin/python - <<'PY'
-from pathlib import Path
-from huggingface_hub import try_to_load_from_cache
-from moe_orbit_prefetch.dynamic_expert_store import DynamicExpertStore
-mid='ai-sage/GigaChat3-10B-A1.8B-bf16'
-idx = try_to_load_from_cache(mid, 'model.safetensors.index.json')
-st = DynamicExpertStore.from_index_file(mid, Path(idx), allow_hub_download=False)
-ids = st.list_expert_ids(1)
-pack = st.get_expert(1, ids[0], device='cpu')
-_ = st.get_expert(1, ids[0], device='cpu')
-print({'model': mid, 'layer': 1, 'n_experts': len(ids), 'keys': sorted(pack.keys()), 'resident_bytes': st.resident_bytes(), 'hits': st.n_hits, 'misses': st.n_misses})
-PY
+/Users/corpuscul/Desktop/theory_megaattractor/.venv/bin/python examples/05_gigachat_store_smoke.py --model-id ai-sage/GigaChat3-10B-A1.8B-bf16
 ```
 
 Result: **PASS**
@@ -123,10 +124,24 @@ Observed:
 - expert pack keys: `down_proj.weight`, `gate_proj.weight`, `up_proj.weight`
 - residency and hot-hit behavior are sane (`hits=1 misses=1`)
 
+### F. GigaChat live smoke — public store path on 20B
+
+Command:
+
+```bash
+/Users/corpuscul/Desktop/theory_megaattractor/.venv/bin/python examples/05_gigachat_store_smoke.py --model-id ai-sage/GigaChat-20B-A3B-instruct-v1.5-bf16
+```
+
+Result: **SKIP**
+
+Observed:
+
+- `model.safetensors.index.json` is not available as a normal local cache path in this environment
+- smoke script correctly exits with a transparent skip instead of pretending success
+
 ## What was NOT fully validated in this session
 
-1. **GigaChat-20B public package smoke** was **not** revalidated by the same direct package-path method in this session:
-   local cache has `config.json`, but `model.safetensors.index.json` is not present as a normal local path in this environment.
+1. **GigaChat-20B** was only revalidated to the level of a transparent **SKIP**: the public smoke correctly reports missing local index instead of fabricating a pass.
 2. No long lean code bench was rerun in this session because that is multi-hour on this laptop.
 3. No synthetic scripts were used for this report by design.
 
@@ -137,10 +152,12 @@ Observed:
 What is positively revalidated locally now:
 
 - public DeepSeek live path (`02`, `03`, `04`)
+- editable install + import path
 - dynamic store hit/evict behavior
 - current runtime still produces a real sparse-chat answer
-- GigaChat 10B store-path compatibility
+- public GigaChat 10B store-path compatibility
 - the repaired `03` example now works from a clean clone layout
+- a public GigaChat smoke now exists as `examples/05_gigachat_store_smoke.py`
 
 What remains outside this session's green zone:
 

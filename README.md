@@ -100,7 +100,7 @@ MODEL_CARD.md             # ML-style method card
   year = {2026},
   url = {https://github.com/andreyivan4enkov/moe-orbit-prefetch},
   license = {Apache-2.0},
-  version = {0.5.4}
+  version = {0.5.5}
 }
 ```
 
