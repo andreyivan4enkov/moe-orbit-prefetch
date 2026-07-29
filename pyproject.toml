@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "moe-orbit-prefetch"
-version = "0.1.0"
-description = "Dynamic MoE expert residency via orbit predictor on embedding h (Object A)"
+version = "0.2.0"
+description = "Full open Object A: MoE orbit prefetch + sparse DeepSeek runtime (MIT; weights not included)"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
@@ -17,6 +17,7 @@ keywords = [
   "deepseek",
   "dynamic-inference",
   "safetensors",
+  "sparse-moe",
 ]
 classifiers = [
   "Development Status :: 3 - Alpha",
@@ -34,6 +35,19 @@ examples = [
   "torch>=2.1",
   "safetensors>=0.4",
   "huggingface_hub>=0.23",
+]
+runtime = [
+  "torch>=2.1",
+  "safetensors>=0.4",
+  "huggingface_hub>=0.23",
+  "transformers>=4.40",
+]
+bench = [
+  "torch>=2.1",
+  "safetensors>=0.4",
+  "huggingface_hub>=0.23",
+  "transformers>=4.40",
+  "psutil>=5.9",
 ]
 dev = [
   "pytest>=7.0",

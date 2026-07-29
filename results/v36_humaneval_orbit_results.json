@@ -1,0 +1,844 @@
+{
+  "verdict": "PASS_CODE_TIE_PREFETCH_EDGE",
+  "stop": false,
+  "model_id": "deepseek-ai/DeepSeek-V2-Lite-Chat",
+  "comparisons": {
+    "better_pass": {
+      "pass": false,
+      "gap": 0.0,
+      "mad": 2.220446049250313e-16,
+      "n": 6,
+      "wins": 0,
+      "losses": 0,
+      "win_frac": 0.0
+    },
+    "less_miss_wait": {
+      "pass": true,
+      "gap": 35.915500000000016,
+      "mad": 28.251800000000035,
+      "n": 6,
+      "wins": 5,
+      "losses": 1,
+      "win_frac": 0.8333333333333334
+    },
+    "pass_at_1_ours": 0.5,
+    "pass_at_1_classic": 0.5,
+    "mean_miss_ours": 425.76946666666663,
+    "mean_miss_classic": 461.6849666666667,
+    "n_ours_pass": 3,
+    "n_classic_pass": 3,
+    "n_tasks": 6
+  },
+  "learning": {
+    "improves": false,
+    "gap": -0.0601868137896966,
+    "mad": 0.05018593485557905,
+    "n": 6,
+    "wins": 1,
+    "losses": 5,
+    "win_frac": 0.16666666666666666,
+    "early_mean": 0.45238208002149577,
+    "late_mean": 0.3921952662317992,
+    "series": [
+      0.33774928774928775,
+      0.48867521367521377,
+      0.48491124260355023,
+      0.5169306184012066,
+      0.45596713130270167,
+      0.4300589863970146,
+      0.407386836989725,
+      0.3948323182194149,
+      0.38899968344412783,
+      0.3864195505986551,
+      0.3849275939949515,
+      0.39060561414392064
+    ]
+  },
+  "pairs": [
+    {
+      "task_id": "QuixBugs/bitcount",
+      "kind": "audit",
+      "ours": {
+        "task_id": "QuixBugs/bitcount",
+        "kind": "audit",
+        "prefetch": true,
+        "passed": true,
+        "score": {
+          "ok": true,
+          "n_pass": 9,
+          "n_total": 9,
+          "failures": [],
+          "error": null,
+          "code": "def bitcount(n):\n    count = 0\n    while n:\n        count += 1\n        n = n & (n - 1)\n    return count"
+        },
+        "attempts": [
+          {
+            "kind": "candidate",
+            "raw": "```python\ndef bitcount(n):\n    count = 0\n    while n:\n        count += 1\n        n = n & (n - 1)\n    return count\n```",
+            "score": {
+              "ok": true,
+              "n_pass": 9,
+              "n_total": 9,
+              "failures": [],
+              "error": null,
+              "code": "def bitcount(n):\n    count = 0\n    while n:\n        count += 1\n        n = n & (n - 1)\n    return count"
+            },
+            "wall_s": 505.683754659025,
+            "tokens_out": 45,
+            "miss_wait_s": 245.8565,
+            "gate_hit": 172,
+            "gate_miss": 8353,
+            "modeled_hit": 2371,
+            "peak_rss_gb": 4.814073856,
+            "sleep_evictions": 0,
+            "learn_hit_frac": 0.33774928774928775
+          }
+        ],
+        "error": null,
+        "broken": false,
+        "miss_wait_s": 245.8565,
+        "wall_s": 505.683754659025,
+        "learn_hit_before": 0.0,
+        "learn_hit_after": 0.33774928774928775
+      },
+      "classic": {
+        "task_id": "QuixBugs/bitcount",
+        "kind": "audit",
+        "prefetch": false,
+        "passed": true,
+        "score": {
+          "ok": true,
+          "n_pass": 9,
+          "n_total": 9,
+          "failures": [],
+          "error": null,
+          "code": "def bitcount(n):\n    count = 0\n    while n:\n        count += 1\n        n = n & (n - 1)\n    return count"
+        },
+        "attempts": [
+          {
+            "kind": "candidate",
+            "raw": "```python\ndef bitcount(n):\n    count = 0\n    while n:\n        count += 1\n        n = n & (n - 1)\n    return count\n```",
+            "score": {
+              "ok": true,
+              "n_pass": 9,
+              "n_total": 9,
+              "failures": [],
+              "error": null,
+              "code": "def bitcount(n):\n    count = 0\n    while n:\n        count += 1\n        n = n & (n - 1)\n    return count"
+            },
+            "wall_s": 577.3871993270004,
+            "tokens_out": 45,
+            "miss_wait_s": 274.5553,
+            "gate_hit": 204,
+            "gate_miss": 8321,
+            "modeled_hit": 0,
+            "peak_rss_gb": 4.884713472,
+            "sleep_evictions": 0,
+            "learn_hit_frac": 0.48867521367521377
+          }
+        ],
+        "error": null,
+        "broken": false,
+        "miss_wait_s": 274.5553,
+        "wall_s": 577.3871993270004,
+        "learn_hit_before": 0.33774928774928775,
+        "learn_hit_after": 0.48867521367521377
+      }
+    },
+    {
+      "task_id": "QuixBugs/gcd",
+      "kind": "audit",
+      "ours": {
+        "task_id": "QuixBugs/gcd",
+        "kind": "audit",
+        "prefetch": true,
+        "passed": true,
+        "score": {
+          "ok": true,
+          "n_pass": 6,
+          "n_total": 6,
+          "failures": [],
+          "error": null,
+          "code": "def gcd(a, b):\n    while b != 0:\n        a, b = b, a % b\n    return abs(a)"
+        },
+        "attempts": [
+          {
+            "kind": "candidate",
+            "raw": "```python\ndef gcd(a, b):\n    while b != 0:\n        a, b = b, a % b\n    return abs(a)\n```",
+            "score": {
+              "ok": true,
+              "n_pass": 6,
+              "n_total": 6,
+              "failures": [],
+              "error": null,
+              "code": "def gcd(a, b):\n    while b != 0:\n        a, b = b, a % b\n    return abs(a)"
+            },
+            "wall_s": 508.3479095880175,
+            "tokens_out": 40,
+            "miss_wait_s": 230.8335,
+            "gate_hit": 254,
+            "gate_miss": 7486,
+            "modeled_hit": 2973,
+            "peak_rss_gb": 4.681805824,
+            "sleep_evictions": 0,
+            "learn_hit_frac": 0.48491124260355023
+          }
+        ],
+        "error": null,
+        "broken": false,
+        "miss_wait_s": 230.8335,
+        "wall_s": 508.3479095880175,
+        "learn_hit_before": 0.48867521367521377,
+        "learn_hit_after": 0.48491124260355023
+      },
+      "classic": {
+        "task_id": "QuixBugs/gcd",
+        "kind": "audit",
+        "prefetch": false,
+        "passed": true,
+        "score": {
+          "ok": true,
+          "n_pass": 6,
+          "n_total": 6,
+          "failures": [],
+          "error": null,
+          "code": "def gcd(a, b):\n    while b != 0:\n        a, b = b, a % b\n    return abs(a)"
+        },
+        "attempts": [
+          {
+            "kind": "candidate",
+            "raw": "```python\ndef gcd(a, b):\n    while b != 0:\n        a, b = b, a % b\n    return abs(a)\n```",
+            "score": {
+              "ok": true,
+              "n_pass": 6,
+              "n_total": 6,
+              "failures": [],
+              "error": null,
+              "code": "def gcd(a, b):\n    while b != 0:\n        a, b = b, a % b\n    return abs(a)"
+            },
+            "wall_s": 512.3571740519837,
+            "tokens_out": 40,
+            "miss_wait_s": 248.9158,
+            "gate_hit": 171,
+            "gate_miss": 7569,
+            "modeled_hit": 0,
+            "peak_rss_gb": 4.727140352,
+            "sleep_evictions": 0,
+            "learn_hit_frac": 0.5169306184012066
+          }
+        ],
+        "error": null,
+        "broken": false,
+        "miss_wait_s": 248.9158,
+        "wall_s": 512.3571740519837,
+        "learn_hit_before": 0.48491124260355023,
+        "learn_hit_after": 0.5169306184012066
+      }
+    },
+    {
+      "task_id": "QuixBugs/is_valid_parenthesization",
+      "kind": "audit",
+      "ours": {
+        "task_id": "QuixBugs/is_valid_parenthesization",
+        "kind": "audit",
+        "prefetch": true,
+        "passed": false,
+        "score": {
+          "ok": false,
+          "n_pass": 0,
+          "n_total": 3,
+          "failures": [
+            "['((()()))()']:AssertionError:['((()()))()'] → None, expected True",
+            "[')()(']:AssertionError:[')()('] → None, expected False",
+            "['((']:AssertionError:['(('] → None, expected False"
+          ],
+          "error": "assert_failures",
+          "code": "def is_valid_parenthesization(parens):\n    depth = 0\n    for paren in parens:\n        if paren == '(':\n            depth += 1\n        else:\n            depth -= 1"
+        },
+        "attempts": [
+          {
+            "kind": "candidate",
+            "raw": "```python\ndef is_valid_parenthesization(parens):\n    depth = 0\n    for paren in parens:\n        if paren == '(':\n            depth += 1\n        else:\n            depth -= 1\n            if depth < 0:",
+            "score": {
+              "ok": false,
+              "n_pass": 0,
+              "n_total": 3,
+              "failures": [
+                "['((()()))()']:AssertionError:['((()()))()'] → None, expected True",
+                "[')()(']:AssertionError:[')()('] → None, expected False",
+                "['((']:AssertionError:['(('] → None, expected False"
+              ],
+              "error": "assert_failures",
+              "code": "def is_valid_parenthesization(parens):\n    depth = 0\n    for paren in parens:\n        if paren == '(':\n            depth += 1\n        else:\n            depth -= 1"
+            },
+            "wall_s": 713.8308527210029,
+            "tokens_out": 64,
+            "miss_wait_s": 330.2767,
+            "gate_hit": 366,
+            "gate_miss": 11124,
+            "modeled_hit": 3768,
+            "peak_rss_gb": 4.780417024,
+            "sleep_evictions": 0,
+            "learn_hit_frac": 0.4787694499232961
+          },
+          {
+            "kind": "repair",
+            "raw": "```python\ndef is_valid_parenthesization(parens):\n    depth = 0\n    for paren in parens:\n        if paren == '(':\n            depth += 1\n        else:\n            depth -= 1\n            if depth < 0:",
+            "score": {
+              "ok": false,
+              "n_pass": 0,
+              "n_total": 3,
+              "failures": [
+                "['((()()))()']:AssertionError:['((()()))()'] → None, expected True",
+                "[')()(']:AssertionError:[')()('] → None, expected False",
+                "['((']:AssertionError:['(('] → None, expected False"
+              ],
+              "error": "assert_failures",
+              "code": "def is_valid_parenthesization(parens):\n    depth = 0\n    for paren in parens:\n        if paren == '(':\n            depth += 1\n        else:\n            depth -= 1"
+            },
+            "wall_s": 677.28323688003,
+            "tokens_out": 64,
+            "miss_wait_s": 300.6371,
+            "gate_hit": 383,
+            "gate_miss": 11108,
+            "modeled_hit": 3720,
+            "peak_rss_gb": 4.877778944,
+            "sleep_evictions": 0,
+            "learn_hit_frac": 0.45596713130270167
+          }
+        ],
+        "error": null,
+        "broken": false,
+        "miss_wait_s": 630.9138,
+        "wall_s": 1391.114089601033,
+        "learn_hit_before": 0.5169306184012066,
+        "learn_hit_after": 0.45596713130270167
+      },
+      "classic": {
+        "task_id": "QuixBugs/is_valid_parenthesization",
+        "kind": "audit",
+        "prefetch": false,
+        "passed": false,
+        "score": {
+          "ok": false,
+          "n_pass": 0,
+          "n_total": 3,
+          "failures": [
+            "['((()()))()']:AssertionError:['((()()))()'] → None, expected True",
+            "[')()(']:AssertionError:[')()('] → None, expected False",
+            "['((']:AssertionError:['(('] → None, expected False"
+          ],
+          "error": "assert_failures",
+          "code": "def is_valid_parenthesization(parens):\n    depth = 0\n    for paren in parens:\n        if paren == '(':\n            depth += 1\n        else:\n            depth -= 1"
+        },
+        "attempts": [
+          {
+            "kind": "candidate",
+            "raw": "```python\ndef is_valid_parenthesization(parens):\n    depth = 0\n    for paren in parens:\n        if paren == '(':\n            depth += 1\n        else:\n            depth -= 1\n            if depth < 0:",
+            "score": {
+              "ok": false,
+              "n_pass": 0,
+              "n_total": 3,
+              "failures": [
+                "['((()()))()']:AssertionError:['((()()))()'] → None, expected True",
+                "[')()(']:AssertionError:[')()('] → None, expected False",
+                "['((']:AssertionError:['(('] → None, expected False"
+              ],
+              "error": "assert_failures",
+              "code": "def is_valid_parenthesization(parens):\n    depth = 0\n    for paren in parens:\n        if paren == '(':\n            depth += 1\n        else:\n            depth -= 1"
+            },
+            "wall_s": 640.2555629389826,
+            "tokens_out": 64,
+            "miss_wait_s": 313.773,
+            "gate_hit": 296,
+            "gate_miss": 11194,
+            "modeled_hit": 0,
+            "peak_rss_gb": 4.811616256,
+            "sleep_evictions": 0,
+            "learn_hit_frac": 0.4402358691032724
+          },
+          {
+            "kind": "repair",
+            "raw": "```python\ndef is_valid_parenthesization(parens):\n    depth = 0\n    for paren in parens:\n        if paren == '(':\n            depth += 1\n        else:\n            depth -= 1\n            if depth < 0:",
+            "score": {
+              "ok": false,
+              "n_pass": 0,
+              "n_total": 3,
+              "failures": [
+                "['((()()))()']:AssertionError:['((()()))()'] → None, expected True",
+                "[')()(']:AssertionError:[')()('] → None, expected False",
+                "['((']:AssertionError:['(('] → None, expected False"
+              ],
+              "error": "assert_failures",
+              "code": "def is_valid_parenthesization(parens):\n    depth = 0\n    for paren in parens:\n        if paren == '(':\n            depth += 1\n        else:\n            depth -= 1"
+            },
+            "wall_s": 666.5520005809958,
+            "tokens_out": 64,
+            "miss_wait_s": 315.8329,
+            "gate_hit": 301,
+            "gate_miss": 11190,
+            "modeled_hit": 0,
+            "peak_rss_gb": 4.985647104,
+            "sleep_evictions": 0,
+            "learn_hit_frac": 0.4300589863970146
+          }
+        ],
+        "error": null,
+        "broken": false,
+        "miss_wait_s": 629.6059,
+        "wall_s": 1306.8075635199784,
+        "learn_hit_before": 0.45596713130270167,
+        "learn_hit_after": 0.4300589863970146
+      }
+    },
+    {
+      "task_id": "HumanEval/0",
+      "kind": "humaneval",
+      "ours": {
+        "task_id": "HumanEval/0",
+        "kind": "humaneval",
+        "prefetch": true,
+        "passed": false,
+        "score": {
+          "ok": false,
+          "n_pass": 0,
+          "n_total": 1,
+          "failures": [
+            "AssertionError:"
+          ],
+          "error": "AssertionError:",
+          "code": "from typing import List",
+          "how": "body"
+        },
+        "attempts": [
+          {
+            "kind": "candidate",
+            "raw": "```python\nfrom typing import List\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    for i in range(len(numbers)):\n        for j in range(i+1, len(numbers)):\n            if abs(numbers[i]",
+            "score": {
+              "ok": false,
+              "n_pass": 0,
+              "n_total": 1,
+              "failures": [
+                "AssertionError:"
+              ],
+              "error": "AssertionError:",
+              "code": "from typing import List",
+              "how": "body"
+            },
+            "wall_s": 627.5936084190034,
+            "tokens_out": 64,
+            "miss_wait_s": 291.5281,
+            "gate_hit": 384,
+            "gate_miss": 11104,
+            "modeled_hit": 3356,
+            "peak_rss_gb": 4.862488576,
+            "sleep_evictions": 0,
+            "learn_hit_frac": 0.4177917320774464
+          },
+          {
+            "kind": "repair",
+            "raw": "```python\nfrom typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer together than\n    given threshold.\n    >>> has_close_elements([1.",
+            "score": {
+              "ok": false,
+              "n_pass": 0,
+              "n_total": 1,
+              "failures": [
+                "AssertionError:"
+              ],
+              "error": "AssertionError:",
+              "code": "from typing import List",
+              "how": "body"
+            },
+            "wall_s": 615.0489184370381,
+            "tokens_out": 64,
+            "miss_wait_s": 276.4213,
+            "gate_hit": 398,
+            "gate_miss": 11092,
+            "modeled_hit": 3272,
+            "peak_rss_gb": 4.954136576,
+            "sleep_evictions": 0,
+            "learn_hit_frac": 0.407386836989725
+          }
+        ],
+        "error": null,
+        "broken": false,
+        "miss_wait_s": 567.9494,
+        "wall_s": 1242.6425268560415,
+        "learn_hit_before": 0.4300589863970146,
+        "learn_hit_after": 0.407386836989725
+      },
+      "classic": {
+        "task_id": "HumanEval/0",
+        "kind": "humaneval",
+        "prefetch": false,
+        "passed": false,
+        "score": {
+          "ok": false,
+          "n_pass": 0,
+          "n_total": 1,
+          "failures": [
+            "AssertionError:"
+          ],
+          "error": "AssertionError:",
+          "code": "from typing import List",
+          "how": "body"
+        },
+        "attempts": [
+          {
+            "kind": "candidate",
+            "raw": "```python\nfrom typing import List\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    for i in range(len(numbers)):\n        for j in range(i+1, len(numbers)):\n            if abs(numbers[i]",
+            "score": {
+              "ok": false,
+              "n_pass": 0,
+              "n_total": 1,
+              "failures": [
+                "AssertionError:"
+              ],
+              "error": "AssertionError:",
+              "code": "from typing import List",
+              "how": "body"
+            },
+            "wall_s": 685.5521832919912,
+            "tokens_out": 64,
+            "miss_wait_s": 332.6256,
+            "gate_hit": 323,
+            "gate_miss": 11165,
+            "modeled_hit": 0,
+            "peak_rss_gb": 4.6789632,
+            "sleep_evictions": 0,
+            "learn_hit_frac": 0.4017716372085304
+          },
+          {
+            "kind": "repair",
+            "raw": "```python\nfrom typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    \"\"\" Check if in given list of numbers, are any two numbers closer together than\n    given threshold.\n    >>> has_close_elements([1.",
+            "score": {
+              "ok": false,
+              "n_pass": 0,
+              "n_total": 1,
+              "failures": [
+                "AssertionError:"
+              ],
+              "error": "AssertionError:",
+              "code": "from typing import List",
+              "how": "body"
+            },
+            "wall_s": 637.7701307759853,
+            "tokens_out": 64,
+            "miss_wait_s": 304.2701,
+            "gate_hit": 332,
+            "gate_miss": 11158,
+            "modeled_hit": 0,
+            "peak_rss_gb": 4.942761984,
+            "sleep_evictions": 0,
+            "learn_hit_frac": 0.3948323182194149
+          }
+        ],
+        "error": null,
+        "broken": false,
+        "miss_wait_s": 636.8957,
+        "wall_s": 1323.3223140679765,
+        "learn_hit_before": 0.407386836989725,
+        "learn_hit_after": 0.3948323182194149
+      }
+    },
+    {
+      "task_id": "HumanEval/1",
+      "kind": "humaneval",
+      "ours": {
+        "task_id": "HumanEval/1",
+        "kind": "humaneval",
+        "prefetch": true,
+        "passed": false,
+        "score": {
+          "ok": false,
+          "n_pass": 0,
+          "n_total": 1,
+          "failures": [
+            "AssertionError:"
+          ],
+          "error": "AssertionError:",
+          "code": "from typing import List\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    stack = []\n    result = []\n    for char in paren_string:\n        if char == '(':\n            stack.append(char)",
+          "how": "full_def"
+        },
+        "attempts": [
+          {
+            "kind": "candidate",
+            "raw": "```python\nfrom typing import List\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    stack = []\n    result = []\n    for char in paren_string:\n        if char == '(':\n            stack.append(char)",
+            "score": {
+              "ok": false,
+              "n_pass": 0,
+              "n_total": 1,
+              "failures": [
+                "AssertionError:"
+              ],
+              "error": "AssertionError:",
+              "code": "from typing import List\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    stack = []\n    result = []\n    for char in paren_string:\n        if char == '(':\n            stack.append(char)",
+              "how": "full_def"
+            },
+            "wall_s": 780.9662611079984,
+            "tokens_out": 64,
+            "miss_wait_s": 356.4828,
+            "gate_hit": 427,
+            "gate_miss": 11036,
+            "modeled_hit": 3475,
+            "peak_rss_gb": 4.71365632,
+            "sleep_evictions": 0,
+            "learn_hit_frac": 0.39081941293737543
+          },
+          {
+            "kind": "repair",
+            "raw": "```python\nfrom typing import List\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    stack = []\n    result = []\n    for char in paren_string:\n        if char == '(':\n            stack.append(char)",
+            "score": {
+              "ok": false,
+              "n_pass": 0,
+              "n_total": 1,
+              "failures": [
+                "AssertionError:"
+              ],
+              "error": "AssertionError:",
+              "code": "from typing import List\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    stack = []\n    result = []\n    for char in paren_string:\n        if char == '(':\n            stack.append(char)",
+              "how": "full_def"
+            },
+            "wall_s": 791.3635683539906,
+            "tokens_out": 64,
+            "miss_wait_s": 340.1832,
+            "gate_hit": 437,
+            "gate_miss": 11052,
+            "modeled_hit": 3672,
+            "peak_rss_gb": 4.571856896,
+            "sleep_evictions": 0,
+            "learn_hit_frac": 0.38899968344412783
+          }
+        ],
+        "error": null,
+        "broken": false,
+        "miss_wait_s": 696.6659999999999,
+        "wall_s": 1572.329829461989,
+        "learn_hit_before": 0.3948323182194149,
+        "learn_hit_after": 0.38899968344412783
+      },
+      "classic": {
+        "task_id": "HumanEval/1",
+        "kind": "humaneval",
+        "prefetch": false,
+        "passed": false,
+        "score": {
+          "ok": false,
+          "n_pass": 0,
+          "n_total": 1,
+          "failures": [
+            "AssertionError:"
+          ],
+          "error": "AssertionError:",
+          "code": "from typing import List\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    stack = []\n    result = []\n    for char in paren_string:\n        if char == '(':\n            stack.append(char)",
+          "how": "full_def"
+        },
+        "attempts": [
+          {
+            "kind": "candidate",
+            "raw": "```python\nfrom typing import List\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    stack = []\n    result = []\n    for char in paren_string:\n        if char == '(':\n            stack.append(char)",
+            "score": {
+              "ok": false,
+              "n_pass": 0,
+              "n_total": 1,
+              "failures": [
+                "AssertionError:"
+              ],
+              "error": "AssertionError:",
+              "code": "from typing import List\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    stack = []\n    result = []\n    for char in paren_string:\n        if char == '(':\n            stack.append(char)",
+              "how": "full_def"
+            },
+            "wall_s": 814.6256690350128,
+            "tokens_out": 64,
+            "miss_wait_s": 362.1584,
+            "gate_hit": 333,
+            "gate_miss": 11130,
+            "modeled_hit": 0,
+            "peak_rss_gb": 4.807647232,
+            "sleep_evictions": 0,
+            "learn_hit_frac": 0.3877838408730857
+          },
+          {
+            "kind": "repair",
+            "raw": "```python\nfrom typing import List\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    stack = []\n    result = []\n    for char in paren_string:\n        if char == '(':\n            stack.append(char)",
+            "score": {
+              "ok": false,
+              "n_pass": 0,
+              "n_total": 1,
+              "failures": [
+                "AssertionError:"
+              ],
+              "error": "AssertionError:",
+              "code": "from typing import List\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    stack = []\n    result = []\n    for char in paren_string:\n        if char == '(':\n            stack.append(char)",
+              "how": "full_def"
+            },
+            "wall_s": 926.7358929060283,
+            "tokens_out": 64,
+            "miss_wait_s": 422.1477,
+            "gate_hit": 346,
+            "gate_miss": 11143,
+            "modeled_hit": 0,
+            "peak_rss_gb": 4.773093376,
+            "sleep_evictions": 0,
+            "learn_hit_frac": 0.3864195505986551
+          }
+        ],
+        "error": null,
+        "broken": false,
+        "miss_wait_s": 784.3061,
+        "wall_s": 1741.3615619410411,
+        "learn_hit_before": 0.38899968344412783,
+        "learn_hit_after": 0.3864195505986551
+      }
+    },
+    {
+      "task_id": "HumanEval/2",
+      "kind": "humaneval",
+      "ours": {
+        "task_id": "HumanEval/2",
+        "kind": "humaneval",
+        "prefetch": true,
+        "passed": true,
+        "score": {
+          "ok": true,
+          "n_pass": 1,
+          "n_total": 1,
+          "failures": [],
+          "error": null,
+          "code": "def truncate_number(number: float) -> float:\n    return number - int(number)",
+          "how": "full_def"
+        },
+        "attempts": [
+          {
+            "kind": "candidate",
+            "raw": "```python\ndef truncate_number(number: float) -> float:\n    return number - int(number)\n```",
+            "score": {
+              "ok": true,
+              "n_pass": 1,
+              "n_total": 1,
+              "failures": [],
+              "error": null,
+              "code": "def truncate_number(number: float) -> float:\n    return number - int(number)",
+              "how": "full_def"
+            },
+            "wall_s": 446.04624459601473,
+            "tokens_out": 27,
+            "miss_wait_s": 182.3976,
+            "gate_hit": 211,
+            "gate_miss": 5470,
+            "modeled_hit": 1403,
+            "peak_rss_gb": 4.638707712,
+            "sleep_evictions": 0,
+            "learn_hit_frac": 0.3849275939949515
+          }
+        ],
+        "error": null,
+        "broken": false,
+        "miss_wait_s": 182.3976,
+        "wall_s": 446.04624459601473,
+        "learn_hit_before": 0.3864195505986551,
+        "learn_hit_after": 0.3849275939949515
+      },
+      "classic": {
+        "task_id": "HumanEval/2",
+        "kind": "humaneval",
+        "prefetch": false,
+        "passed": true,
+        "score": {
+          "ok": true,
+          "n_pass": 1,
+          "n_total": 1,
+          "failures": [],
+          "error": null,
+          "code": "def truncate_number(number: float) -> float:\n    return number - int(number)",
+          "how": "full_def"
+        },
+        "attempts": [
+          {
+            "kind": "candidate",
+            "raw": "```python\ndef truncate_number(number: float) -> float:\n    return number - int(number)\n```",
+            "score": {
+              "ok": true,
+              "n_pass": 1,
+              "n_total": 1,
+              "failures": [],
+              "error": null,
+              "code": "def truncate_number(number: float) -> float:\n    return number - int(number)",
+              "how": "full_def"
+            },
+            "wall_s": 425.43423165701097,
+            "tokens_out": 27,
+            "miss_wait_s": 195.831,
+            "gate_hit": 143,
+            "gate_miss": 5538,
+            "modeled_hit": 0,
+            "peak_rss_gb": 4.693028864,
+            "sleep_evictions": 0,
+            "learn_hit_frac": 0.39060561414392064
+          }
+        ],
+        "error": null,
+        "broken": false,
+        "miss_wait_s": 195.831,
+        "wall_s": 425.43423165701097,
+        "learn_hit_before": 0.3849275939949515,
+        "learn_hit_after": 0.39060561414392064
+      }
+    }
+  ],
+  "selftest": {
+    "ok": true,
+    "rows": [
+      {
+        "task_id": "HumanEval/0",
+        "full_def_ok": true,
+        "body_ok": true,
+        "full_err": null,
+        "body_err": null
+      },
+      {
+        "task_id": "HumanEval/1",
+        "full_def_ok": true,
+        "body_ok": true,
+        "full_err": null,
+        "body_err": null
+      },
+      {
+        "task_id": "HumanEval/2",
+        "full_def_ok": true,
+        "body_ok": true,
+        "full_err": null,
+        "body_err": null
+      },
+      {
+        "task_id": "QuixBugs/bitcount",
+        "full_def_ok": true,
+        "body_ok": true,
+        "full_err": null,
+        "body_err": null
+      },
+      {
+        "task_id": "QuixBugs/gcd",
+        "full_def_ok": true,
+        "body_ok": true,
+        "full_err": null,
+        "body_err": null
+      },
+      {
+        "task_id": "QuixBugs/is_valid_parenthesization",
+        "full_def_ok": true,
+        "body_ok": true,
+        "full_err": null,
+        "body_err": null
+      }
+    ]
+  },
+  "config": {
+    "max_new": 64,
+    "max_repairs": 1,
+    "humaneval_n": 3,
+    "audit_n": 3,
+    "dtype": "float32",
+    "orbit_predictor": "emergent_no_magic"
+  }
+}

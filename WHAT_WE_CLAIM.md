@@ -5,15 +5,18 @@ driven by an orbit predictor on embedding / residual `h`.
 
 ## We claim (verified in our labs)
 
-1. **Software assembly** in this repo:
-   - `OrbitPredictor`: online field `S_env` + induction from `(h, tok_id)` history → top-k expert **candidates for prefetch**;
-   - `DynamicExpertStore`: load **one expert’s tensors** from safetensors shards via `index.json`, hit cache, **evict** by local mean of `S_env` (sleep).
+1. **Complete open-source Object A tree** in this repo (MIT):
+   - `OrbitPredictor`, `DynamicExpertStore`, `emergent_metrics`, `process_gate`
+   - **`SparseDeepseekRuntime`** — sparse generate path with modeled expert prefetch / deposit / sleep
+   - **`deepseek_chat_engine`** — chat helper on top of that runtime
+   - runnable examples and the lean HumanEval/QuixBugs bench script used in lab
 2. **Empirical lab results** (see `results/`):
-   - Expert slice load + hit + sleep reduced resident bytes in the v13 smoke (`PASS_PHASE5A_DYNAMIC`).
-   - On a DeepSeek-V2-Lite HumanEval/QuixBugs lean bench (v36): **code pass@1 tied** classic (0.50); **expert miss-wait lower** for ours (wins=5, losses=1). Orbit “learning improves to the end” was **False** in that run.
-3. Thresholds inside the predictor use **local field/window statistics** (not magic PASS constants). Structural facts (e.g. 64 routed / top-6 on V2-Lite) are allowed.
+   - Expert slice load + hit + sleep reduced resident bytes (v13).
+   - Lean code bench (v36): pass@1 **tied** classic; miss-wait **ours better**; late learning↑ **False**.
+3. Thresholds inside the predictor use **local field/window statistics** (not magic PASS constants).
 
 ## We do **not** claim
+
 
 | Topic | Why not |
 |---|---|

@@ -1,30 +1,19 @@
-# moe-orbit-prefetch
+# moe-orbit-prefetch (RU)
 
-**Объект A — динамическая резидентность экспертов MoE по орбите из embedding / residual `h`.**
+**Объект A — полностью открытый исходник:** орбита экспертов + sparse runtime DeepSeek с prefetch.
 
-Простыми словами: не держим всю MoE в RAM. По `h` угадываем, какие эксперты понадобятся → подгружаем их куски из safetensors → после живого gate делаем deposit → холодных усыпляем (sleep/evict).
+Лицензия кода: **MIT**. Веса моделей **не** кладём в git (лицензия DeepSeek/HF).
 
-Репозиторий публикует **только объект A**. Память чата / RLM (объект B) сюда **не входит**.
-
-| Документ | Зачем |
-|---|---|
-| [WHAT_WE_CLAIM.md](WHAT_WE_CLAIM.md) | Граница утверждений |
-| [RELATED_WORK.md](RELATED_WORK.md) | Чужое / prior art |
-| [results/](results/) | Санитизированные отчёты лаборатории |
-
-## Что проверено
-
-- v13: эксперт грузится куском; hit; sleep режет resident.
-- v36: качество кода = classic; ожидание экспертов меньше; «обучение к концу растёт» — нет.
-
-Не заявляем SOTA и не говорим, что предиктор = gate DeepSeek.
-
-## Примеры
+В репозитории есть всё нужное для использования объекта A:
+- `OrbitPredictor`, `DynamicExpertStore`
+- полный `SparseDeepseekRuntime` (generate без `from_pretrained` всей MoE)
+- `deepseek_chat_engine.ask`
+- smokes v13 и lean HumanEval/QuixBugs бенч, который мы реально гоняли
 
 ```bash
-pip install -e ".[examples]"
-python examples/01_toy_orbit_no_weights.py          # без весов
-python examples/02_smoke_expert_slice.py            # нужен HF-кэш DeepSeek-V2-Lite-Chat
+pip install -e ".[runtime]"
+python examples/01_toy_orbit_no_weights.py
+python examples/04_chat_ask.py "Привет" --max-new 32
 ```
 
-Веса моделей в репозиторий **не кладём** — только код (MIT).
+Объект B (топология чата / RLM) сюда не входит. Граница утверждений: [WHAT_WE_CLAIM.md](WHAT_WE_CLAIM.md).
