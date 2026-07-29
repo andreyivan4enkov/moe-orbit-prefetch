@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: If you use this software, please cite it as below.
+title: "moe-orbit-prefetch: Dynamic MoE expert residency via orbit on embedding h"
+version: 0.1.0
+date-released: "2026-07-29"
+authors:
+  - family-names: Ivanchenkov
+    given-names: Andrey
+    alias: andreyivan4enkov
+license: MIT
+repository-code: "https://github.com/andreyivan4enkov/moe-orbit-prefetch"
+abstract: >
+  Open research code for predicting and loading MoE expert weight slices from
+  embedding/residual signals (OrbitPredictor + DynamicExpertStore), with
+  verified lab notes on expert-slice residency and prefetch miss-wait.
+  Does not claim identity with DeepSeek's trained gate or chat-memory (Object B).
+keywords:
+  - mixture-of-experts
+  - expert-prefetch
+  - dynamic-inference
+  - deepseek
