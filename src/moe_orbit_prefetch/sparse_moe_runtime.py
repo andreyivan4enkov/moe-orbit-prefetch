@@ -1,8 +1,11 @@
 """
-Sparse MoE runtime: L1 spine резидентно, L2 эксперты только через DynamicExpertStore.
+Sparse MoE runtime: L1 spine resident; L2 experts only via DynamicExpertStore.
 
-Запрещено: AutoModelForCausalLM.from_pretrained полного MoE.
-Разрешено: safetensors по имени тензора + get_expert(layer, eid) по орбите gate.
+Forbidden: AutoModelForCausalLM.from_pretrained of the full MoE.
+Allowed: safetensors by tensor name + get_expert(layer, eid) along the gate/orbit.
+
+Full source — edit freely. Math: docs/MATH.md. Design: docs/DESIGN_DYNAMIC_WEIGHTS.md.
+License: Apache-2.0 — LICENSE, NOTICE, ATTRIBUTION.md
 """
 from __future__ import annotations
 

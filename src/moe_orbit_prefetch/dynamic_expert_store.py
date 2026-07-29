@@ -1,8 +1,10 @@
 """
-DynamicExpertStore — подгрузка тензоров экспертов MoE по орбите (не полный model).
+DynamicExpertStore — load MoE expert tensors by orbit (not the full model).
 
 L0: index.json
-L2: get_expert(layer, expert_id) → dict[str, Tensor]; evict по S_env / явный drop.
+L2: get_expert(layer, expert_id) → dict[str, Tensor]; evict by S_env / explicit drop.
+
+Math (sleep): docs/MATH.md §7. License: Apache-2.0 — LICENSE, NOTICE, ATTRIBUTION.md
 """
 from __future__ import annotations
 

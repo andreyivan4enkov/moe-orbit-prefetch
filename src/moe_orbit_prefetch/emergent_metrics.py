@@ -1,8 +1,11 @@
 """
-Эмерджентные гейты: сравнения без магических порогов PASS.
+Emergent metrics: comparisons without magic PASS thresholds.
 
-PASS = большинство локальных сравнений (каждый шаг голосует).
-Пороги отбора в динамике — из локальной статистики поля/окна.
+PASS = majority of local pairwise votes.
+Selection thresholds inside dynamics = local field/window statistics.
+
+Math: docs/MATH.md
+License: Apache-2.0 — see LICENSE, NOTICE, ATTRIBUTION.md
 """
 from __future__ import annotations
 

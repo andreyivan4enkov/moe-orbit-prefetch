@@ -1,11 +1,10 @@
 """
-Modeled orbit predictor: induction + S_env по residual/эмбеддингу h.
+Modeled orbit predictor: induction + S_env on residual/embedding h.
 
-Не заменяет live gate — предсказывает орбиту для prefetch до/во время Exec.
+Does NOT replace the live MoE gate — predicts the prefetch orbit before/during Exec.
 
-Пороги и масштабы — только из локальной статистики окна/поля
-(emergent_metrics), без подогнанных констант PASS/депозита/затухания.
-Структурные факты: n_experts, top_k, размер окна стенда.
+Math (all formulas): docs/MATH.md
+License: Apache-2.0 — see LICENSE, NOTICE, ATTRIBUTION.md
 """
 from __future__ import annotations
 

@@ -1,0 +1,16 @@
+moe-orbit-prefetch
+Copyright 2026 andreyivan4enkov
+
+This product includes software developed for Object A —
+dynamic MoE expert residency via orbit prefetch from embedding/residual h.
+Repository: https://github.com/andreyivan4enkov/moe-orbit-prefetch
+
+Licensed under the Apache License, Version 2.0.
+See LICENSE and ATTRIBUTION.md.
+
+---------------------------------------------------------------------------
+MODEL WEIGHTS (not part of this distribution)
+
+DeepSeek models on Hugging Face (e.g. deepseek-ai/DeepSeek-V2-Lite-Chat)
+remain under their upstream licenses. This project does not grant rights
+to those weights.

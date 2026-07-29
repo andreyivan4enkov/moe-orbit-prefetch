@@ -1,15 +1,18 @@
 # Changelog
 
+## 0.3.0 — 2026-07-29
+
+- License → **Apache-2.0** + [ATTRIBUTION.md](ATTRIBUTION.md) (small use vs credit in substantial systems)
+- Full math write-up: [docs/MATH.md](docs/MATH.md)
+- Source map: [docs/SOURCE_MANIFEST.md](docs/SOURCE_MANIFEST.md)
+- Embedding protocol doc for Object A
+- Clarified: fork/edit all first-party sources; weights still not redistributed
+
 ## 0.2.0 — 2026-07-29
 
-- **Full Object A source published** (not a thin dump):
-  - `sparse_moe_runtime.py` — complete sparse DeepSeek-V2-Lite generate + modeled prefetch
-  - `deepseek_chat_engine.py` — `ask` / `chat_generate`
-  - examples `03` (v13 smoke), `04` (chat), `bench_humaneval_lean/` (full lean A/B script)
-  - design doc + lab JSON/report artifacts
-- MIT unchanged; weights still not redistributed ([NOTICE.md](NOTICE.md))
+- Full Object A runtime (`sparse_moe_runtime`, chat engine, benches)
 
 ## 0.1.0 — 2026-07-29
 
-- First public freeze: OrbitPredictor + DynamicExpertStore + toy/slice examples + claim boundary
+- Initial OrbitPredictor + DynamicExpertStore freeze
 
