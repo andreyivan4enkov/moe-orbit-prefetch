@@ -9,7 +9,7 @@ Weights are **not** shipped; use DeepSeek/HF weights under their terms.
 | Field | Value |
 |---|---|
 | Name | `moe-orbit-prefetch` (Object A) |
-| Version | 0.5.1 |
+| Version | 0.5.2 |
 | Type | Research prototype: MoE expert **prefetch / residency** from residual `h` |
 | License | Apache-2.0 (+ [ATTRIBUTION.md](ATTRIBUTION.md) for substantial products) |
 | Primary target | DeepSeek-V2-Lite / Lite-Chat **and** GigaChat MoE in the same open DeepSeek-style family |
@@ -48,6 +48,12 @@ Weights are **not** shipped; use DeepSeek/HF weights under their terms.
 | S | `analysis/` | Synthetic learnable stream for field plots only |
 
 Honest lean summary (both DeepSeek v36 and GigaChat v34): pass@1 **tie** with classic; miss-wait **ours better** (wins>losses).
+
+## Authorship / development process
+
+This repository uses an **AI-assisted implementation workflow**. The maintainer's primary role is architectural and analytical: problem framing, risk/claim boundaries, technical-task writing, acceptance criteria, and review. Substantial code and documentation were produced through LLM coding agents under that direction.
+
+See [docs/AUTHORSHIP.md](docs/AUTHORSHIP.md).
 
 ## Ethical considerations
 

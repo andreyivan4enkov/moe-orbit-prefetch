@@ -177,6 +177,7 @@ class SparseDeepseekRuntime:
     predictors: dict[int, OrbitPredictor] = field(default_factory=dict)
     _pack_dev: OrderedDict = field(default_factory=OrderedDict)  # LRU (layer,eid)→pack
     _cur_tok_id: int | None = None
+    _state_lock: Any = field(default_factory=threading.Lock)
     _prefetch_lock: Any = field(default_factory=threading.Lock)
     _prefetch_q: Any = field(default=None, repr=False)
     _prefetch_worker_started: bool = False
@@ -258,6 +259,24 @@ class SparseDeepseekRuntime:
         with self._prefetch_lock:
             while len(self._pack_dev) > cap:
                 self._pack_dev.popitem(last=False)
+
+    def _set_prefetch_state(
+        self,
+        *,
+        tok_id: int | None = None,
+        h_np: np.ndarray | None = None,
+    ) -> None:
+        """Atomic update of shared modeled-prefetch state."""
+        with self._state_lock:
+            if tok_id is not None:
+                self._cur_tok_id = int(tok_id)
+            if h_np is not None:
+                self.last_h_vec = h_np
+
+    def _get_prefetch_state(self) -> tuple[np.ndarray | None, int | None]:
+        """Atomic snapshot of shared modeled-prefetch state."""
+        with self._state_lock:
+            return self.last_h_vec, self._cur_tok_id
 
     def request_cancel(self) -> None:
         if self.cancel_flag is not None:
@@ -417,7 +436,7 @@ class SparseDeepseekRuntime:
         if ids.dim() == 1:
             ids = ids.unsqueeze(0)
         bsz, q_len = ids.shape
-        self._cur_tok_id = int(ids[0, -1].item())
+        self._set_prefetch_state(tok_id=int(ids[0, -1].item()))
         embed = self.w("model.embed_tokens.weight")
         hidden = F.embedding(ids, embed)
         position_ids = torch.arange(0, q_len, device=device, dtype=torch.long).unsqueeze(0)
@@ -526,13 +545,14 @@ class SparseDeepseekRuntime:
         if not self.use_modeled_prefetch or not self.predictors:
             return 0
         if h_vec is None:
-            if self.last_h_vec is None:
+            h_np, snap_tid = self._get_prefetch_state()
+            if h_np is None:
                 return 0
-            h_np = self.last_h_vec
         else:
             h_np = h_vec.detach().float().cpu().numpy()
-            self.last_h_vec = h_np
-        tid = self._cur_tok_id if tok_id is None else tok_id
+            self._set_prefetch_state(h_np=h_np)
+            _, snap_tid = self._get_prefetch_state()
+        tid = snap_tid if tok_id is None else tok_id
         H = max(1, int(self.token_horizon))
         jobs: list[tuple[int, int]] = []
         # ближайшие слои важнее (очередь FIFO — кладём их первыми)
@@ -557,9 +577,10 @@ class SparseDeepseekRuntime:
         if not self.use_modeled_prefetch or layer not in self.predictors:
             return []
         h_np = h_vec.detach().float().cpu().numpy()
-        self.last_h_vec = h_np
+        self._set_prefetch_state(h_np=h_np)
+        _, snap_tid = self._get_prefetch_state()
         pred = self.predictors[layer].prefetch_set(
-            h_np, self._cur_tok_id, horizon_copies=1
+            h_np, snap_tid, horizon_copies=1
         )
         self.last_modeled_orbit = list(pred)
         return pred
@@ -610,10 +631,11 @@ class SparseDeepseekRuntime:
             inter = set(modeled) & set(self.last_orbit)
             self.n_modeled_hit += len(inter)
         if layer in self.predictors:
+            _, snap_tid = self._get_prefetch_state()
             self.predictors[layer].deposit(
                 href.detach().float().cpu().numpy(),
                 self.last_orbit,
-                self._cur_tok_id,
+                snap_tid,
             )
         return topk_idx, topk_weight.to(h.dtype)
 
@@ -763,7 +785,7 @@ class SparseDeepseekRuntime:
         ids = input_ids.to(device)
         bsz, q_len = ids.shape
         # токен для induction-предиктора (последний входного окна)
-        self._cur_tok_id = int(ids[0, -1].item())
+        self._set_prefetch_state(tok_id=int(ids[0, -1].item()))
         embed = self.w("model.embed_tokens.weight")
         hidden = F.embedding(ids, embed)
 
@@ -871,14 +893,15 @@ class SparseDeepseekRuntime:
                     }
                 )
                 step_in = generated if past is None else generated[:, -1:]
-                self._cur_tok_id = int(step_in[0, -1].item())
+                self._set_prefetch_state(tok_id=int(step_in[0, -1].item()))
                 t_step0 = time.perf_counter()
                 logits, past = self.forward_logits(step_in, past)
                 if step == 0:
                     # прогрев t…t+H ДО decode; worker пауза на время decode (не жрёт bandwidth)
                     if self.use_modeled_prefetch:
                         self._prefetch_paused = False
-                        self.prefetch_token_horizon(tok_id=self._cur_tok_id)
+                        _, snap_tid = self._get_prefetch_state()
+                        self.prefetch_token_horizon(tok_id=snap_tid)
                         self._wait_prefetch_idle(timeout_s=180.0)
                         self._prefetch_paused = True
                     t_prefill_end = time.perf_counter()
@@ -890,7 +913,7 @@ class SparseDeepseekRuntime:
                     next_id = torch.argmax(next_logits, dim=-1, keepdim=True)
                 tid = int(next_id.item())
                 generated = torch.cat([generated, next_id.to(generated.device)], dim=-1)
-                self._cur_tok_id = tid
+                self._set_prefetch_state(tok_id=tid)
                 n_out = step + 1
                 elapsed = time.perf_counter() - t_gen0
                 prefill_s = None if t_prefill_end is None else (t_prefill_end - t_gen0)

@@ -25,7 +25,7 @@ BENCHMARK = "smoke_dynamic_weights_v13"
 LOGS_DIR.mkdir(exist_ok=True)
 REPORTS_DIR.mkdir(exist_ok=True)
 
-ROOT = VERSION_DIR.parents[1]
+ROOT = VERSION_DIR.parent
 sys.path.insert(0, str(ROOT / "src"))
 
 from moe_orbit_prefetch.dynamic_expert_store import DynamicExpertStore  # noqa: E402

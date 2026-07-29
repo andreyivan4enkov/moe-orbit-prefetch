@@ -18,6 +18,8 @@ for **open DeepSeek-style MoE** (DeepSeek-V2-Lite **and** GigaChat lab paths).
 |---|---|
 | What we claim | [WHAT_WE_CLAIM.md](WHAT_WE_CLAIM.md) |
 | Model / method card | [MODEL_CARD.md](MODEL_CARD.md) |
+| Authorship / AI-assisted workflow | [docs/AUTHORSHIP.md](docs/AUTHORSHIP.md) |
+| Latest local validation | [docs/LOCAL_VALIDATION_20260729.md](docs/LOCAL_VALIDATION_20260729.md) |
 | Supported families | [docs/SUPPORTED_MODELS.md](docs/SUPPORTED_MODELS.md) |
 | Live vs synthetic evidence | [docs/EVIDENCE_TIERS.md](docs/EVIDENCE_TIERS.md) |
 | Lab hardware limits | [docs/LAB_SCOPE.md](docs/LAB_SCOPE.md) |
@@ -88,6 +90,7 @@ MODEL_CARD.md             # ML-style method card
 - **Apache-2.0** — [LICENSE](LICENSE), [NOTICE](NOTICE)
 - Substantial products: [ATTRIBUTION.md](ATTRIBUTION.md)
 - Cite: [CITATION.cff](CITATION.cff)
+- Authorship / how this code was produced: [docs/AUTHORSHIP.md](docs/AUTHORSHIP.md)
 
 ```bibtex
 @software{moe_orbit_prefetch,
@@ -96,7 +99,7 @@ MODEL_CARD.md             # ML-style method card
   year = {2026},
   url = {https://github.com/andreyivan4enkov/moe-orbit-prefetch},
   license = {Apache-2.0},
-  version = {0.5.0}
+  version = {0.5.2}
 }
 ```
 

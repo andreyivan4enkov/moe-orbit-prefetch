@@ -10,6 +10,7 @@ Thanks for considering a contribution. This project follows common GitHub / open
 4. New **claims** need a lab artifact under `results/` — no invented PASS.
 5. Prefer **ours → classic** order in benches; use emergent `wins > losses` gates (no magic margins).
 6. Label Tier **S** (synthetic) vs Tier **L** (live) clearly — [docs/EVIDENCE_TIERS.md](docs/EVIDENCE_TIERS.md).
+7. Do not misrepresent authorship: see [docs/AUTHORSHIP.md](docs/AUTHORSHIP.md) for the project's AI-assisted workflow and maintainer role.
 
 ## Dev setup
 

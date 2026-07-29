@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.2 — 2026-07-29
+
+- Local no-synthetic validation recorded in `docs/LOCAL_VALIDATION_20260729.md`
+- `SparseDeepseekRuntime`: shared modeled-prefetch state (`_cur_tok_id`, `last_h_vec`) now guarded by `_state_lock`
+- Fixed `examples/03_smoke_dynamic_weights_v13.py` so it runs from the repository clone layout
+- Added `docs/AUTHORSHIP.md` and linked authorship / AI-assisted workflow from public docs
+
 ## 0.5.1 — 2026-07-29
 
 - Document **DeepSeek-family** scope including **GigaChat** lab evidence (`docs/SUPPORTED_MODELS.md`)

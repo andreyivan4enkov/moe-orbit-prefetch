@@ -9,7 +9,18 @@
 | Веса | не в git |
 | Железо автора | MacBook-класс; полный бенч на 100 задач / GPU **не заявлен** |
 
-См. [docs/SUPPORTED_MODELS.md](docs/SUPPORTED_MODELS.md), [MODEL_CARD.md](MODEL_CARD.md), [docs/LAB_SCOPE.md](docs/LAB_SCOPE.md).
+См. [docs/SUPPORTED_MODELS.md](docs/SUPPORTED_MODELS.md), [MODEL_CARD.md](MODEL_CARD.md), [docs/LAB_SCOPE.md](docs/LAB_SCOPE.md), [docs/AUTHORSHIP.md](docs/AUTHORSHIP.md), [docs/LOCAL_VALIDATION_20260729.md](docs/LOCAL_VALIDATION_20260729.md).
+
+## Авторство и способ разработки
+
+Автор репозитория здесь честно позиционируется **не как профессиональный программист по основной работе**, а как человек из области:
+
+- анализа бизнес-процессов,
+- риск-менеджмента,
+- настройки CRM,
+- архитектуры компании и бизнес-процессов.
+
+Архитектурные решения, ТЗ, рамки рисков и критерии приёмки задавались автором, а значительная часть кода и документации реализовывалась в **AI-assisted / white-coding** процессе через LLM-агентов. Подробно: [docs/AUTHORSHIP.md](docs/AUTHORSHIP.md).
 
 ## Живые результаты (Tier L)
 
