@@ -9,7 +9,7 @@ Weights are **not** shipped; use DeepSeek/HF weights under their terms.
 | Field | Value |
 |---|---|
 | Name | `moe-orbit-prefetch` (Object A) |
-| Version | 0.5.2 |
+| Version | 0.5.3 |
 | Type | Research prototype: MoE expert **prefetch / residency** from residual `h` |
 | License | Apache-2.0 (+ [ATTRIBUTION.md](ATTRIBUTION.md) for substantial products) |
 | Primary target | DeepSeek-V2-Lite / Lite-Chat **and** GigaChat MoE in the same open DeepSeek-style family |
@@ -34,10 +34,12 @@ Weights are **not** shipped; use DeepSeek/HF weights under their terms.
 
 | Item | Value |
 |---|---|
-| Author lab | Apple MacBook-class laptop (CPU / unified memory, ~16GB class) |
+| Author lab | MacBook Pro (2019), Intel Core i9, 16 GB RAM, Radeon 4 GB |
 | Full 50–100 task GPU suite | **Out of scope** for this lab (resource-bound) |
 | Published Tier L stand | Lean HumanEval/QuixBugs subset on **DeepSeek-V2-Lite** and **GigaChat-20B** |
 | Absolute wall-clock | Hardware-bound; re-check qualitative gates, not raw seconds |
+
+Additional note: this laptop **thermally throttles strongly** under long heavy runs. So live numbers in this repository are useful as constrained-machine evidence, but should not be read as stable GPU-server throughput or latency claims.
 
 ## Evaluation data
 

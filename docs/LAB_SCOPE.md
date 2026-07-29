@@ -2,7 +2,20 @@
 
 ## Author compute
 
-Tier **L** evidence in this repository was produced on a **laptop-class Apple Mac** (CPU / unified memory). That is intentional: Object A exists to keep MoE residency small enough for constrained machines.
+Tier **L** evidence in this repository was produced on a **2019 MacBook Pro**. That is intentional: Object A exists to keep MoE residency small enough for constrained machines.
+
+Current public hardware description for the author's lab:
+
+- Apple **MacBook Pro (2019)**
+- **Intel Core i9**
+- **16 GB RAM**
+- discrete **Radeon GPU with 4 GB VRAM**
+
+Important practical limit:
+
+- this machine **thermally throttles hard** under sustained heavy inference / simulation load;
+- even moderate background load can reduce throughput;
+- therefore long live benches here should be read as **constrained-machine evidence**, not as stable datacenter-style performance numbers.
 
 ## What we publish
 

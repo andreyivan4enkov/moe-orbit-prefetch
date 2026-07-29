@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.3 — 2026-07-29
+
+- Tightened public hardware honesty: exact author lab now documented as **MacBook Pro 2019 / Intel i9 / 16 GB RAM / Radeon 4 GB**
+- Added explicit note about **thermal throttling** and why live numbers should be read as constrained-machine evidence
+
 ## 0.5.2 — 2026-07-29
 
 - Local no-synthetic validation recorded in `docs/LOCAL_VALIDATION_20260729.md`

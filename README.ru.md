@@ -7,7 +7,7 @@
 | Статус | research prototype (alpha) |
 | Лицензия | Apache-2.0 |
 | Веса | не в git |
-| Железо автора | MacBook-класс; полный бенч на 100 задач / GPU **не заявлен** |
+| Железо автора | MacBook Pro 2019, Intel i9, 16 ГБ RAM, Radeon 4 ГБ; длинные прогоны сильно троттлятся |
 
 См. [docs/SUPPORTED_MODELS.md](docs/SUPPORTED_MODELS.md), [MODEL_CARD.md](MODEL_CARD.md), [docs/LAB_SCOPE.md](docs/LAB_SCOPE.md), [docs/AUTHORSHIP.md](docs/AUTHORSHIP.md), [docs/LOCAL_VALIDATION_20260729.md](docs/LOCAL_VALIDATION_20260729.md).
 

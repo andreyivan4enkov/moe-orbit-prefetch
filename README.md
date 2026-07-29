@@ -11,7 +11,7 @@ for **open DeepSeek-style MoE** (DeepSeek-V2-Lite **and** GigaChat lab paths).
 
 > **Status:** research prototype (alpha). Not a production inference server.  
 > **Weights:** not redistributed (Hugging Face / model vendor terms).  
-> **Lab compute:** author MacBook-class laptop — see [docs/LAB_SCOPE.md](docs/LAB_SCOPE.md).  
+> **Lab compute:** MacBook Pro (2019), Intel i9, 16 GB RAM, Radeon 4 GB; thermally constrained — see [docs/LAB_SCOPE.md](docs/LAB_SCOPE.md).  
 > **Which models:** [docs/SUPPORTED_MODELS.md](docs/SUPPORTED_MODELS.md) (not “any LLM”).
 
 | Start here | Link |
@@ -99,7 +99,7 @@ MODEL_CARD.md             # ML-style method card
   year = {2026},
   url = {https://github.com/andreyivan4enkov/moe-orbit-prefetch},
   license = {Apache-2.0},
-  version = {0.5.2}
+  version = {0.5.3}
 }
 ```
 
