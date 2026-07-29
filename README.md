@@ -1,82 +1,64 @@
 # moe-orbit-prefetch
 
-**Object A — complete open source** for dynamic MoE expert residency  
-(orbit from embedding/residual \(h\) → prefetch → deposit → sleep).
+**Object A — open MoE orbit prefetch** (math + runtime + **analysis artifacts**).
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![Release](https://img.shields.io/github/v/release/andreyivan4enkov/moe-orbit-prefetch)](https://github.com/andreyivan4enkov/moe-orbit-prefetch/releases)
 
-**Fork it. Edit it. Take methods you need.**  
-All first-party **source + math** live in this tree (see [docs/SOURCE_MANIFEST.md](docs/SOURCE_MANIFEST.md) and [docs/MATH.md](docs/MATH.md)).
+If you only skimmed earlier tags: **start with analysis** — there are trajectories, plots, and gates you can open without downloading DeepSeek weights.
 
-| Doc | Why |
-|---|---|
-| [docs/MATH.md](docs/MATH.md) | **Full equations** (predict / deposit / sleep / emergent gate) |
-| [docs/SOURCE_MANIFEST.md](docs/SOURCE_MANIFEST.md) | Every source file mapped |
-| [docs/DESIGN_DYNAMIC_WEIGHTS.md](docs/DESIGN_DYNAMIC_WEIGHTS.md) | L0/L1/L2 design |
-| [docs/EMBEDDING_PROTOCOL.md](docs/EMBEDDING_PROTOCOL.md) | Embedding channel protocol |
-| [ATTRIBUTION.md](ATTRIBUTION.md) | Small use vs credit in larger systems |
-| [WHAT_WE_CLAIM.md](WHAT_WE_CLAIM.md) | Honest claim boundary |
-| [RELATED_WORK.md](RELATED_WORK.md) | Prior art |
-| [README.ru.md](README.ru.md) | Русская витрина |
-
----
-
-## License (open + attribution)
-
-- **Apache License 2.0** — free to use, modify, redistribute. **No fee.**
-- Keep `LICENSE` + `NOTICE` on redistribution (standard Apache).
-- **Small experiments / snippets:** that is enough.
-- **Substantial products / systems** that ship this method: please credit the upstream  
-  (`moe-orbit-prefetch` / andreyivan4enkov) — details in [ATTRIBUTION.md](ATTRIBUTION.md).
-
-Model **weights** are not in git (DeepSeek/HF terms). Everything else is.
-
----
-
-## Install
+## Analyze first (no weights)
 
 ```bash
 git clone https://github.com/andreyivan4enkov/moe-orbit-prefetch.git
-cd moe-orbit-prefetch
-python -m venv .venv && source .venv/bin/activate
-pip install -e ".[runtime]"
+cd moe-orbit-prefetch && pip install -e ".[analysis]"
+python analysis/generate_orbit_trajectory.py
+python analysis/plot_orbit_analysis.py
 ```
 
----
+| Artifact | What it is |
+|---|---|
+| [analysis/REPORT.md](analysis/REPORT.md) | How to read the offline experiment |
+| [analysis/data/orbit_trajectory_200.json](analysis/data/orbit_trajectory_200.json) | **~215KB** per-step JSON (200 steps) |
+| [analysis/figures/hit_curves_vs_baselines.png](analysis/figures/hit_curves_vs_baselines.png) | Orbit vs prev/freq/cyclic |
+| [analysis/figures/s_env_evolution.png](analysis/figures/s_env_evolution.png) | Field \(S_{\mathrm{env}}\) over time |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Mermaid system map |
+| [docs/MATH.md](docs/MATH.md) | Full equations |
+| [docs/SOURCE_MANIFEST.md](docs/SOURCE_MANIFEST.md) | Every editable source file |
 
-## Source you can edit
+On a learnable synthetic stream (not live DeepSeek gate): orbit mean hit **≈0.30** vs prev **≈0.17** / freq **≈0.14** / cyclic **≈0.08**; emergent gates vs those baselines **PASS** (wins>losses). Re-run the scripts to regenerate.
+
+## Full source (edit / fork)
 
 ```text
 src/moe_orbit_prefetch/
-  orbit_predictor.py      # math: MATH.md §1–5
-  emergent_metrics.py     # math: MATH.md §2,4,6
-  dynamic_expert_store.py # math: MATH.md §7
-  sparse_moe_runtime.py   # full sparse generate + prefetch
-  deepseek_chat_engine.py
+  orbit_predictor.py       # predictor math
+  emergent_metrics.py      # local thresholds + wins>losses
+  dynamic_expert_store.py  # safetensors expert slices + sleep
+  sparse_moe_runtime.py    # ~900 lines sparse DeepSeek generate + prefetch
+  deepseek_chat_engine.py  # ask / chat_generate
   process_gate.py
 ```
 
----
+License: **Apache-2.0** (free). Substantial products: credit upstream — [ATTRIBUTION.md](ATTRIBUTION.md).  
+Weights stay on Hugging Face (not redistributed).
 
-## Run
+## Runtime examples (needs HF cache)
 
 ```bash
-python examples/01_toy_orbit_no_weights.py
-python examples/02_smoke_expert_slice.py          # needs HF cache
-python examples/03_smoke_dynamic_weights_v13.py
+pip install -e ".[runtime]"
+python examples/02_smoke_expert_slice.py
 python examples/04_chat_ask.py "Hello" --max-new 32
-python examples/bench_humaneval_lean/bench_humaneval_lean.py   # long
 ```
 
----
+Lab (hardware-bound): [results/v36_humaneval_prefetch_edge.md](results/v36_humaneval_prefetch_edge.md).
 
-## Verified lab (honest)
+## Docs index
 
-| Result | Meaning |
+| Doc | Purpose |
 |---|---|
-| [v13](results/v13_dynamic_expert_slice.md) | Expert slice + sleep ↓ RAM |
-| [v36](results/v36_humaneval_prefetch_edge.md) | Code tie; miss-wait ours better; late learning↑ false |
-
-We do **not** claim SOTA or identity with DeepSeek’s trained gate.
+| [WHAT_WE_CLAIM.md](WHAT_WE_CLAIM.md) | Claim boundary |
+| [RELATED_WORK.md](RELATED_WORK.md) | Prior art |
+| [README.ru.md](README.ru.md) | Русская витрина |
+| [analysis/README.md](analysis/README.md) | Analysis how-to |

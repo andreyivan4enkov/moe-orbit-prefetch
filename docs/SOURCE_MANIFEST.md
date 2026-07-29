@@ -2,6 +2,17 @@
 
 This repository is meant to be **forked and edited**. Below is every first-party source file and what it contains. If something is missing from this list, open an issue.
 
+## Analysis (offline)
+
+| Path | Purpose |
+|---|---|
+| `analysis/generate_orbit_trajectory.py` | Build 200-step JSON + gates vs baselines |
+| `analysis/plot_orbit_analysis.py` | PNG figures |
+| `analysis/data/orbit_trajectory_200.json` | Per-step records (~215KB) |
+| `analysis/figures/*.png` | Hit curves, S_env, bars |
+| `analysis/REPORT.md` | How to read results |
+| `docs/ARCHITECTURE.md` | System map |
+
 ## Package `src/moe_orbit_prefetch/` (edit these)
 
 | File | Role | Math |

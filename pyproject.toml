@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "moe-orbit-prefetch"
-version = "0.3.0"
-description = "Complete open Object A: MoE orbit prefetch math+runtime (Apache-2.0; attribution for substantial use)"
+version = "0.4.0"
+description = "Object A: MoE orbit prefetch — full source, math, analysis trajectories/plots (Apache-2.0)"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "Apache-2.0" }
@@ -41,6 +41,10 @@ runtime = [
   "safetensors>=0.4",
   "huggingface_hub>=0.23",
   "transformers>=4.40",
+]
+analysis = [
+  "numpy>=1.24",
+  "matplotlib>=3.7",
 ]
 bench = [
   "torch>=2.1",
